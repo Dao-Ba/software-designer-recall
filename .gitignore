@@ -1,0 +1,19 @@
+# Editor and operating-system state
+.idea/
+.vscode/
+desktop.ini
+.DS_Store
+Thumbs.db
+
+# Python caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Machine-specific settings and generated backup snapshots
+config/*.local.json
+data/*.sqlite3*
+data/**/*.sqlite3*
+data/import-queue.json
+data/backups/
+data/**/backups/

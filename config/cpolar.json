@@ -1,0 +1,8 @@
+{
+  "api_base_url": "http://127.0.0.1:9200",
+  "login_path": "/api/v1/user/login",
+  "tunnels_path": "/api/v1/tunnels",
+  "username": "",
+  "password": "",
+  "tunnel_name": "软考"
+}

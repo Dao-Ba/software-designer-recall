@@ -1,0 +1,1972 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>知识复习</title>
+	<link rel="stylesheet" href="/vendor/katex/katex.min.css">
+	<style>
+		:root {
+			--bg: #f5f7fb;
+			--ink: #202b41;
+			--muted: #6c7b93;
+			--line: #dfe6f0;
+			--main: #4657d5;
+			--good: #14855a;
+			--bad: #bc4154
+		}
+		
+		* {
+			box-sizing: border-box
+		}
+		
+		body {
+			margin: 0;
+			background: var(--bg);
+			color: var(--ink);
+			font-family: system-ui, "Microsoft YaHei", sans-serif
+		}
+		
+		.shell {
+			max-width: 1120px;
+			margin: auto;
+			padding: 32px 19px
+		}
+		
+		.head {
+			display: flex;
+			justify-content: space-between;
+			gap: 12px;
+			align-items: center;
+			margin-bottom: 25px
+		}
+		
+		h1 {
+			font-size: 25px;
+			margin: 0
+		}
+		
+		h2 {
+			font-size: 19px;
+			margin: 0 0 15px
+		}
+		
+		small, .hint {
+			font-size: 12px;
+			color: var(--muted)
+		}
+		
+		.layout {
+			display: grid;
+			grid-template-columns:224px minmax(0, 1fr);
+			gap: 20px
+		}
+		
+		.side, .main {
+			min-width: 0;
+			border: 1px solid var(--line);
+			background: white;
+			border-radius: 16px;
+			padding: 21px;
+			box-shadow: 0 8px 26px #24315708
+		}
+		
+		.side {
+			height: max-content
+		}
+		
+		.tab {
+			display: block;
+			width: 100%;
+			text-align: left;
+			padding: 12px;
+			margin: 3px 0;
+			border: 0;
+			border-radius: 9px;
+			background: transparent;
+			color: #526076;
+			cursor: pointer;
+			font-size: 14px
+		}
+		
+		.tab.active {
+			background: #edf0ff;
+			color: #3d4dc2;
+			font-weight: 800
+		}
+		
+		.statrow {
+			display: grid;
+			grid-template-columns:repeat(4, 1fr);
+			gap: 12px;
+			margin-bottom: 24px
+		}
+		
+		.stat {
+			background: #f5f7fc;
+			border-radius: 10px;
+			padding: 13px
+		}
+		
+		.stat b {
+			font-size: 24px;
+			display: block
+		}
+		
+		.stat small {
+			display: block;
+			margin-top: 4px
+		}
+		
+		.grid2 {
+			display: grid;
+			grid-template-columns:repeat(2, 1fr);
+			gap: 12px
+		}
+		
+		.btn {
+			border: 0;
+			border-radius: 9px;
+			padding: 11px 16px;
+			cursor: pointer;
+			background: var(--main);
+			color: #fff;
+			font-weight: 700
+		}
+		
+		.btn:disabled {
+			opacity: .5;
+			cursor: not-allowed
+		}
+		
+		.btn.outline {
+			background: #ecf0fc;
+			color: #4153bb
+		}
+		
+		.btn.danger {
+			background: #fff1f2;
+			color: var(--bad)
+		}
+		
+		input, select {
+			padding: 10px;
+			border: 1px solid var(--line);
+			border-radius: 9px;
+			background: white;
+			max-width: 100%
+		}
+		
+		label {
+			font-size: 13px;
+			font-weight: 650
+		}
+		
+		.field {
+			display: flex;
+			flex-direction: column;
+			gap: 7px;
+			margin: 10px 0
+		}
+		
+		.subpanel {
+			padding: 17px;
+			background: #f7f9fc;
+			border-radius: 12px;
+			margin: 14px 0
+		}
+		
+		.prompt {
+			font-size: 19px;
+			line-height: 2.1;
+			padding: 23px;
+			background: #f7f8fd;
+			border-radius: 13px;
+			margin: 19px 0;
+			overflow-wrap: anywhere;
+			white-space: pre-wrap
+		}
+		.prompt table, .preview table {border-collapse:collapse;display:block;width:100%;max-width:100%;overflow-x:auto;white-space:normal;margin:10px 0}
+		.prompt th, .prompt td, .preview th, .preview td {border:1px solid var(--line);padding:6px 9px;vertical-align:top}
+		.prompt pre, .preview pre {overflow-x:auto;white-space:pre;background:#eef2fb;padding:16px;border:1px solid #dce3f5;border-radius:8px;line-height:1.65;tab-size:4}
+		.prompt pre code, .preview pre code {display:block;background:transparent;padding:0;font:14px/1.65 Consolas,'Cascadia Code',monospace;overflow-wrap:normal}
+		.codeKeyword {color:#7041b5;font-weight:600}
+		.codeString {color:#1380a8}
+		.codeComment {color:#8a5b31}
+		.codeNumber {color:#16804c}
+		.mermaidFigure {margin:12px 0;padding:12px;background:#f7f9fc;border:1px solid var(--line);border-radius:9px;overflow-x:auto}
+		.mermaidFigure svg {display:block;max-width:100%;height:auto;margin:auto}
+		.prompt .katex-display, .preview .katex-display {overflow-x:auto;overflow-y:hidden;padding:.3em 0}
+		.prompt mark, .preview mark {background:#fff0a8;border-radius:3px;padding:0 2px}
+		.prompt code, .preview code {background:#e9edfa;border-radius:3px;padding:1px 4px;font-size:.9em}
+		.inlineTitle code {background:#e9edfa;border-radius:3px;padding:1px 4px;font-size:.95em}
+		.inlineTitle mark {background:#fff0a8;border-radius:3px;padding:0 2px}
+		.prompt p, .preview p {margin:0 0 .7em}
+		.prompt p:last-child, .preview p:last-child {margin-bottom:0}
+		.prompt ul, .prompt ol, .preview ul, .preview ol {margin:.3em 0 .8em;padding-left:1.5em}
+		.prompt li, .preview li {margin:.25em 0}
+		.prompt blockquote, .preview blockquote {margin:.7em 0;padding:2px 12px;border-left:3px solid #a9b4e9;color:#47536a}
+		.imageAnnotation {margin-top:12px;padding:10px 12px;border-left:3px solid #a9b4e9;background:#eef1fb;border-radius:6px;font-size:.9em;line-height:1.6;white-space:normal}
+		.imageAnnotation > .annotationLabel {display:block;margin-bottom:4px}
+		
+		.blank {
+			background: #e6ebff;
+			color: #3f4dc0;
+			padding: 4px 10px;
+			border-radius: 6px;
+			font-weight: 750
+		}
+		
+		.option {
+			border: 1px solid var(--line);
+			background: #fff;
+			border-radius: 10px;
+			padding: 13px;
+			cursor: pointer;
+			text-align: left;
+			font-size: 15px;
+			color: var(--ink)
+		}
+		
+		.option.good {
+			background: #e4f6eb;
+			border-color: #84c6a0
+		}
+		
+		.option.bad {
+			background: #ffeff1;
+			border-color: #db8891
+		}
+		
+		.option:disabled {
+			cursor: default
+		}
+		
+		.feedback {
+			background: #f4f7fc;
+			border-radius: 10px;
+			padding: 15px;
+			line-height: 1.7;
+			margin: 16px 0
+		}
+		
+		.actions {
+			display: flex;
+			justify-content: space-between;
+			gap: 10px;
+			align-items: center;
+			flex-wrap: wrap;
+			margin: 18px 0
+		}
+		
+		.badge {
+			font-size: 12px;
+			color: #4a55a4;
+			background: #e9edfc;
+			border-radius: 99px;
+			padding: 7px 11px
+		}
+		
+		.muted {
+			color: var(--muted)
+		}
+		
+		.hidden {
+			display: none !important
+		}
+		
+		.row {
+			padding: 12px 0;
+			border-bottom: 1px solid var(--line);
+			line-height: 1.7
+		}
+		
+		.row:last-child {
+			border: 0
+		}
+		
+		.preview {
+			overflow-wrap: anywhere;
+			white-space: pre-wrap
+		}
+		.prompt.richNote, .preview.richNote {white-space:normal}
+		.recentAnswer {background:#f0f3ff;border-radius:10px;padding:10px 12px;margin:12px 0}
+		.recentBack {border:0;background:none;color:var(--main);padding:0;text-align:left;cursor:pointer;font:inherit}
+		.recentBack:hover {text-decoration:underline}
+		.recentBack:disabled {cursor:default;opacity:.55;text-decoration:none}
+		
+		.status {
+			font-size: 13px;
+			color: #4553a0;
+			padding: 10px;
+			background: #f0f3ff;
+			border-radius: 9px;
+			white-space: pre-wrap
+		}
+		
+		.topfilters {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			flex-wrap: wrap
+		}
+		
+		progress {
+			width: 100%;
+			accent-color: var(--main)
+		}
+		
+		.footer {
+			font-size: 12px;
+			color: var(--muted);
+			padding-top: 20px
+		}
+		
+		.files {
+			width: 100%
+		}
+		.fileChooser {display:flex;align-items:center;gap:12px;padding:9px;border:1px solid var(--line);border-radius:9px;background:#fff;flex-wrap:wrap}
+		.fileChooser .btn {padding:8px 12px}
+		#cardSearch {width:min(100%,480px);flex:1 1 300px;min-width:260px}
+		textarea {width:100%;min-height:130px;padding:12px;border:1px solid var(--line);border-radius:9px;font:inherit;resize:vertical}
+		#knowledgeModal textarea {min-height:260px;overflow-y:hidden;resize:none;line-height:1.65}
+		#groupEditModal textarea {overflow-y:hidden}
+		.modalBackdrop {position:fixed;inset:0;background:#17223c88;display:flex;align-items:center;justify-content:center;padding:20px;z-index:20}
+		.modalBox {background:white;border-radius:14px;padding:22px;width:min(100%,720px);max-height:90vh;overflow:auto;overflow-anchor:none}
+		.modalBox .btn.outline.active {background:var(--main);color:white}
+		.splitCard {border:1px solid var(--line);border-radius:11px;padding:14px;margin:12px 0;background:#f7f9fc}
+		#knowledgeModal .splitCard textarea {background:white}
+		.mergedPart {padding:12px 0;border-top:1px solid var(--line)}
+		.mergedPart:first-child {padding-top:0;border-top:0}
+		.mergedPart:last-child {padding-bottom:0}
+		.mergedPartHeader {display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+		.mergedPartHeader .btn {padding:6px 10px;white-space:nowrap}
+		.groupEditPart {border:1px solid var(--line);border-radius:11px;padding:14px;margin:12px 0;background:#f7f9fc}
+		.groupEditPart .materialImage {max-height:180px;width:auto;max-width:100%;object-fit:contain}
+		.row.currentEdit {outline:2px solid #9eabff;outline-offset:2px}
+		.row.pinnedCard {outline:2px solid #d5a63a;outline-offset:2px}
+		.pageNavigator {position:fixed;right:12px;top:14vh;height:72vh;width:28px;z-index:10;touch-action:none;cursor:pointer;outline:none}
+		.pageNavigator::before {content:"";position:absolute;top:0;bottom:0;left:11px;width:6px;border-radius:8px;background:#cfd8ed}
+		.pageNavigatorThumb {position:absolute;left:5px;width:18px;min-height:34px;border-radius:12px;background:var(--main);box-shadow:0 2px 8px #283a8a55}
+		.pageNavigator:hover .pageNavigatorThumb,.pageNavigator:focus-visible .pageNavigatorThumb {background:#3344bb}
+		.pageNavigatorLabel {position:absolute;right:32px;top:50%;transform:translateY(-50%);padding:4px 7px;border-radius:6px;background:#26345c;color:white;font-size:11px;white-space:nowrap;opacity:0;pointer-events:none}
+		.pageNavigator:hover .pageNavigatorLabel,.pageNavigator:focus-visible .pageNavigatorLabel {opacity:1}
+		.exampleText {
+			white-space: pre-wrap;
+			font: inherit;
+			line-height: 1.7;
+			margin: 10px 0;
+			overflow-wrap: anywhere
+		}
+		.materialImage {
+			max-width: 100%;
+			max-height: 600px;
+			object-fit: contain;
+			display: block;
+			margin: 10px 0;
+			border: 1px solid var(--line);
+			background: white;
+			min-width: 120px;
+			min-height: 80px
+		}
+		.chapterGroup, .topicGroup {
+			border: 1px solid var(--line);
+			border-radius: 10px;
+			padding: 12px 15px;
+			margin: 10px 0
+		}
+		.topicGroup {background: #f7f9fc;margin-left: 14px}
+		summary {cursor: pointer;font-weight: 700}
+		
+		@media (max-width: 720px) {
+			.shell {padding:16px 12px}
+			.pageNavigator {right:2px;width:24px}
+			.pageNavigator::before {left:9px}
+			.pageNavigatorThumb {left:3px}
+			.layout {
+				grid-template-columns:minmax(0,1fr)
+			}
+			
+			.side {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 4px
+			}
+			
+			.tab {
+				width: auto
+			}
+			
+			.statrow {
+				grid-template-columns:repeat(2, minmax(0,1fr))
+			}
+			
+			.grid2 {
+				grid-template-columns:minmax(0,1fr)
+			}
+			
+			.main {
+				padding: 14px
+			}
+			.prompt {padding:14px}
+			.prompt th, .prompt td, .preview th, .preview td {min-width:6.5em;overflow-wrap:break-word;word-break:normal}
+			#cardSearch {min-width:0}
+		}
+	</style>
+</head>
+<body>
+<div class="shell">
+	<header class="head">
+		<div><h1 id="appTitle">知识复习系统</h1></div>
+	</header>
+	<div class="layout">
+		<nav class="side">
+			<button class="tab active" data-view="random">✦ 随机抽查</button>
+			<button class="tab" data-view="wrong">↻ 不理解与收藏</button>
+			<button class="tab" data-view="retry">↻ 再次查看</button>
+			<button class="tab" data-view="cards">▤ 知识点总览</button>
+			<button class="tab" data-view="manage">▣ 知识点管理</button>
+			<button class="tab" data-view="backup">⇩ 记录备份</button>
+			<p class="footer">笔记按二级标题整理；图片单独展示。学习记录保存在本机。</p></nav>
+		<main class="main">
+			<div class="statrow">
+				<div class="stat"><b id="nTotal">0</b><small>知识点与图片</small></div>
+				<div class="stat"><b id="nStudied">0</b><small>已练习</small></div>
+				<div class="stat"><b id="nWrong">0</b><small>不理解标记</small></div>
+				<div class="stat"><b id="nFavorites">0</b><small>已收藏</small></div>
+			</div>
+			<section id="study">
+				<div class="actions">
+					<div><span class="badge" id="viewTitle">随机抽查</span> <small id="count"></small></div>
+					<div class="topfilters"><label for="section">章节</label><select id="section">
+						<option value="">全部章节</option>
+					</select>
+						<label for="studyOrder">顺序</label><select id="studyOrder"><option value="random">随机</option><option value="source">按原顺序</option></select>
+						<button class="btn outline" id="shuffle">重新随机</button>
+					</div>
+				</div>
+				<h2 id="heading">从你的笔记中学习</h2><small id="source"></small>
+				<div class="actions"><div class="topfilters"><button class="btn outline hidden" id="favorite">☆ 收藏</button><button class="btn outline hidden" id="editCurrent">修改 / 拆分卡片</button></div><small id="marks"></small></div>
+				<div id="prompt" class="prompt">正在读取知识点…</div>
+				<div class="grid2" id="options"></div>
+				<div class="feedback hidden" id="feedback"></div>
+				<div class="recentAnswer hidden" id="recentAnswer"></div>
+				<div class="actions"><small id="reviewInfo"></small><small id="saveStatus" role="status"></small>
+					<div class="topfilters" id="markActions"></div>
+				<button class="btn danger" id="deleteCurrent">删除当前知识点</button>
+					<button class="btn outline hidden" id="previous">← 上一条</button>
+					<button class="btn" id="next">跳过 / 下一题 →</button>
+				</div>
+			</section>
+			<section id="cards" class="hidden"><h2>知识点总览</h2>
+				<div class="actions"><input id="cardSearch" type="search" placeholder="搜索章节、标题或知识点内容"><div class="topfilters"><button class="btn outline" id="expandAll">一键展开</button><button class="btn outline" id="collapseAll">一键折叠</button></div></div>
+				<div class="topfilters"><label for="cardStatusFilter">状态筛选</label><select id="cardStatusFilter"><option value="all">全部知识点</option><option value="wrong">不理解与收藏</option><option value="retry">再次查看</option></select></div>
+				<div class="topfilters"><button class="btn outline" id="jumpPinnedOverview">跳到钉住的知识点</button><small id="pinnedOverviewLabel"></small></div>
+				<div id="cardList"></div>
+			</section>
+			<section id="manage" class="hidden"><h2>知识点管理</h2>
+				<div class="subpanel">
+					<h2>1. 导入笔记并整理知识点</h2>
+					<div class="fileChooser"><button class="btn outline" id="pickImport">选择文件</button><span id="importFiles">未选择文件</span></div>
+					<p class="hint">选择一个或多个 Markdown 笔记；程序会自动读取笔记中引用的同级图片。</p>
+					<details><summary>文件窗口无法打开时使用浏览器上传</summary><input class="files" type="file" multiple accept=".md,.markdown,text/markdown,text/plain" id="mdfiles"><small>若笔记不在项目 notes 目录，浏览器无法提供原始路径；含图片的笔记请使用上方按钮。</small></details>
+					<div class="field"><label><input type="checkbox" id="smartSplit" checked> 用本地 Ollama 优化长知识点的切分（可取消）</label>
+						<div class="topfilters"><select id="model">
+							<option value="">点击刷新模型列表</option>
+						</select>
+							<button class="btn outline" id="refreshModels">刷新模型</button>
+						</div>
+						<small>模型只决定原文块的合并和分开，不改写内容；模型失败时会自动使用规则结果。</small>
+					</div>
+					<label><input type="checkbox" id="skipSame" checked> 没有变化且已有知识点的笔记跳过；已删除知识点的笔记会重新整理</label>
+					<div class="actions">
+						<button class="btn" id="generate">导入并整理知识点</button>
+						<button class="btn outline hidden" id="resumeImport">继续未完成的导入</button>
+					</div>
+					<p class="hint">按文件依次处理并保存到当前考试的数据库；待办记录也按考试分别保存。关闭网页不影响处理；服务器重启后会自动继续，失败时也可手动立即重试。</p>
+					<details id="importReport"><summary id="importReportSummary">导入记录</summary><div class="status" id="generateStatus">等待导入 Markdown。</div></details>
+					<progress id="generateProgress" class="hidden" max="100" value="0"></progress>
+				</div>
+				<details class="subpanel"><summary>已经保存的笔记</summary>
+					<div id="noteList" class="hint">暂无</div>
+				</details>
+				<div class="subpanel"><h2>2. 删除章节或标题</h2><p class="hint">可勾选单个标题、整章，或一次全选所有章节和标题，再按需删除。</p>
+					<div class="topfilters"><button class="btn outline" id="selectAllDelete">全选章节和标题</button><button class="btn outline" id="clearDeleteSelection">清空选择</button></div>
+					<div id="deleteTargets"></div>
+					<div class="actions"><button class="btn danger" id="deleteKnowledge">只删除保存的笔记原文</button><button class="btn danger" id="deleteScope">只删除学习卡片</button><button class="btn danger" id="deleteSource">原文与学习卡片都删除</button></div>
+					<div class="status" id="deleteStatus">请选择删除范围。</div>
+				</div>
+				<div class="subpanel"><h2>3. 上传后覆盖或追加</h2>
+					<div class="fileChooser"><button class="btn outline" id="pickRegen">选择文件</button><span id="regenFiles">未选择文件</span></div>
+					<details><summary>文件窗口无法打开时使用浏览器上传</summary><input class="files" type="file" multiple accept=".md,.markdown,text/markdown,text/plain" id="regenMdFiles"></details>
+					<div id="uploadTargets"></div>
+					<div class="field"><label>写入方式</label><div><label><input type="radio" name="regenAction" value="replace" checked> 覆盖所选范围</label>　<label><input type="radio" name="regenAction" value="append"> 追加内容</label></div></div>
+					<div class="hidden"><label><input type="checkbox" id="writeKnowledge" checked> 保存知识点</label>　<label><input type="checkbox" id="writeQuestions" checked> 整理知识点卡片</label></div>
+					<button class="btn" id="regenerate">处理所选文件</button>
+					<details><summary>不用上传，使用已保存的笔记重新整理知识点</summary><div id="regenTargets"></div><button class="btn outline" id="regenerateSaved">重新整理所选范围</button></details>
+					<div class="status" id="regenStatus">请选择范围或重新上传笔记。</div>
+					<progress id="regenProgress" class="hidden" max="100" value="0"></progress>
+				</div>
+				<div class="subpanel"><h2>4. 手工添加知识点</h2>
+					<div class="grid2"><div class="field"><label for="manualNote">章节</label><select id="manualNote"></select></div><div class="field"><label for="manualH2">已有二级标题</label><select id="manualH2"></select></div></div>
+					<div class="field"><label for="manualNewH2">或输入新的二级标题</label><input id="manualNewH2" placeholder="留空则使用上方已有标题"></div>
+					<div class="field"><label for="manualImage">图片（可选，单张不超过 8 MB）</label><input id="manualImage" type="file" accept="image/png,image/jpeg,image/gif,image/webp,image/svg+xml,.svg"></div>
+					<div class="field"><label for="manualText" id="manualTextLabel">知识点文本</label><textarea id="manualText" placeholder="输入需要整理的知识点"></textarea></div>
+					<div class="hidden"><label><input type="checkbox" id="manualWriteKnowledge" checked> 保存知识点</label>　<label><input type="checkbox" id="manualWriteQuestions" checked> 整理知识点卡片</label></div>
+					<button class="btn" id="manualGenerate">添加并处理文本</button><div class="status" id="manualStatus">请选择章节和二级标题；选择图片后，文本会作为图片注释。</div>
+				</div>
+			</section>
+			<section id="backup" class="hidden"><h2>备份与学习记录</h2>
+				<p>打开“记录备份”时，会在运行程序的电脑上保存一份完整数据库快照；手机或其他浏览器打开，也保存在运行程序的电脑上。</p>
+				<div class="subpanel"><h2>恢复备份</h2>
+					<input type="file" id="backupFile" accept=".sqlite3,application/vnd.sqlite3">
+					<button class="btn outline" id="restoreBackup">恢复备份</button>
+					<p class="hint">选择“记录备份”生成的 .sqlite3 文件。恢复前会自动保存当前数据库副本。</p>
+					<div class="status hidden" id="importStatus"></div>
+				</div>
+				<div class="actions">
+					<button class="btn" id="export">再次备份到运行程序的电脑</button>
+					<button class="btn outline" id="exportDb">查看数据库位置</button>
+					<button class="btn danger" id="clear">清空学习记录（保留知识点）</button>
+				</div>
+				<div class="status" id="backupStatus">打开本页后会自动在运行程序的电脑上保存备份。</div>
+			</section>
+				<div class="footer">知识点保留笔记内容；选择“不理解”后会进入复习，也可以收藏。图片会单独展示。
+			</div>
+		</main>
+	</div>
+</div>
+<div id="pageNavigator" class="pageNavigator hidden" role="scrollbar" aria-label="页面进度导航" aria-orientation="vertical" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0"><div id="pageNavigatorThumb" class="pageNavigatorThumb"></div><span id="pageNavigatorLabel" class="pageNavigatorLabel">0%</span></div>
+<div id="knowledgeModal" class="modalBackdrop hidden"><div class="modalBox"><h2>修改知识点卡片</h2><div class="topfilters"><button class="btn outline" id="editMode">修改或补充</button><button class="btn outline" id="splitMode">拆分卡片</button></div><div id="knowledgeEditField"><div class="field"><label for="knowledgeTitle">卡片标题</label><input id="knowledgeTitle" maxlength="150"><small>只修改这张卡片的标题，不改变所属二级标题。</small></div><div class="field"><label for="knowledgeEdited">修改后内容</label><textarea id="knowledgeEdited"></textarea></div></div><div id="splitPanel" class="hidden"><p class="hint">在下方卡片中选中要单独保留的文字，点击“选中文字，分成卡片”。可以重复操作，每张卡片的标题可单独修改。</p><div id="splitCards"></div></div><div class="actions"><button class="btn outline" id="closeKnowledge">关闭</button><button class="btn" id="saveKnowledge">保存修改</button></div><div class="status" id="knowledgeStatus">修改知识点后保存。</div></div></div>
+<div id="groupEditModal" class="modalBackdrop hidden"><div class="modalBox"><h2>编辑组合卡片</h2><p class="hint">按显示顺序修改文字和每张图片的注释，保存后一起更新。</p><div id="groupEditParts"></div><div class="actions"><button class="btn outline" id="closeGroupEdit">关闭</button><button class="btn" id="saveGroupEdit">保存组合</button></div><div class="status" id="groupEditStatus"></div></div></div>
+<div id="imageAnnotationModal" class="modalBackdrop hidden"><div class="modalBox"><h2>图片注释</h2><p class="hint">注释会与这张图片一起显示；支持 Markdown 和公式。</p><div class="field"><label for="imageAnnotationText">注释内容</label><textarea id="imageAnnotationText" placeholder="写下图片中的重点、说明或易错点"></textarea></div><div class="actions"><button class="btn outline" id="closeImageAnnotation">关闭</button><button class="btn" id="saveImageAnnotation">保存注释</button></div><div class="status" id="imageAnnotationStatus">留空保存可清除注释。</div></div></div>
+<script src="/vendor/markdown-it/markdown-it.min.js"></script>
+<script src="/vendor/dompurify/purify.min.js"></script>
+<script src="/vendor/katex/katex.min.js"></script>
+<script src="/vendor/katex/auto-render.min.js"></script>
+<script>
+	let all = [], knowledgeRows = [], list = [], index = 0, mode = 'random', activeView = 'random', picked = null, locked = false, lastCorrect = false, optionValues = [], recentAnswered = null, pinnedId = null, randomBatchIds = [];
+	const $ = x => document.getElementById(x);
+	const esc = s => String(s ?? '').replace(/[&<>"']/g, ch => ({
+		'&': '&amp;',
+		'<': '&lt;',
+		'>': '&gt;',
+		'"': '&quot;',
+		"'": '&#39;'
+	}[ch]));
+	const searchText = value => String(value ?? '').toLocaleLowerCase().replace(/\s+/g,'');
+	const matchesSearch = (query, values) => !query || values.some(value => searchText(value).includes(query));
+	function pageNavigatorMetrics(scrollHeight, viewport, trackHeight, scrollY) {
+		let maxScroll=Math.max(0,scrollHeight-viewport);
+		let thumbHeight=Math.min(trackHeight,Math.max(34,trackHeight*viewport/Math.max(scrollHeight,1)));
+		let progress=maxScroll ? Math.max(0,Math.min(1,scrollY/maxScroll)) : 0;
+		return {maxScroll,thumbHeight,top:progress*Math.max(0,trackHeight-thumbHeight),progress};
+	}
+	function updatePageNavigator() {
+		if (!document.documentElement || !window.innerHeight) return;
+		let nav=$('pageNavigator'), thumb=$('pageNavigatorThumb');
+		let maxScroll=Math.max(0,document.documentElement.scrollHeight-window.innerHeight);
+		let visible=activeView==='cards' && maxScroll>1;
+		nav.classList.toggle('hidden',!visible);
+		if (!visible) return;
+		let metrics=pageNavigatorMetrics(document.documentElement.scrollHeight,window.innerHeight,nav.clientHeight,window.scrollY||0);
+		thumb.style.height=metrics.thumbHeight+'px';
+		thumb.style.top=metrics.top+'px';
+		let percent=Math.round(metrics.progress*100);
+		$('pageNavigatorLabel').textContent=percent+'%';
+		nav.setAttribute('aria-valuenow',String(percent));
+	}
+	function jumpPageNavigator(clientY) {
+		let nav=$('pageNavigator'), rect=nav.getBoundingClientRect();
+		let metrics=pageNavigatorMetrics(document.documentElement.scrollHeight,window.innerHeight,rect.height,window.scrollY||0);
+		let travel=Math.max(1,rect.height-metrics.thumbHeight);
+		let progress=Math.max(0,Math.min(1,(clientY-rect.top-metrics.thumbHeight/2)/travel));
+		window.scrollTo(0,progress*metrics.maxScroll);
+	}
+	{
+		let nav=$('pageNavigator'), dragging=false;
+		if (typeof nav.addEventListener==='function') {
+			nav.addEventListener('pointerdown',event=>{dragging=true;nav.setPointerCapture?.(event.pointerId);jumpPageNavigator(event.clientY);event.preventDefault()});
+			nav.addEventListener('pointermove',event=>{if(dragging)jumpPageNavigator(event.clientY)});
+			nav.addEventListener('pointerup',()=>{dragging=false});
+			nav.addEventListener('pointercancel',()=>{dragging=false});
+			nav.addEventListener('keydown',event=>{
+				let top=window.scrollY||0,viewport=window.innerHeight;
+				if(event.key==='Home')top=0;
+				else if(event.key==='End')top=document.documentElement.scrollHeight;
+				else if(event.key==='ArrowUp')top-=80;
+				else if(event.key==='ArrowDown')top+=80;
+				else if(event.key==='PageUp')top-=viewport;
+				else if(event.key==='PageDown')top+=viewport;
+				else return;
+				window.scrollTo(0,top);event.preventDefault();
+			});
+		}
+		window.addEventListener?.('scroll',updatePageNavigator,{passive:true});
+		window.addEventListener?.('resize',updatePageNavigator);
+		if (typeof ResizeObserver!=='undefined' && document.body) new ResizeObserver(updatePageNavigator).observe(document.body);
+	}
+	const noteMarkdown = typeof markdownit === 'function' ? markdownit({html:true,breaks:true,linkify:false}) : null;
+	function highlightPython(source) {
+		let pattern=/(?:"""[\s\S]*?"""|'''[\s\S]*?'''|"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*')|#[^\n]*|\b(?:class|def|async|return|if|elif|else|for|while|in|import|from|as|pass|break|continue|try|except|finally|raise|with|lambda|yield|True|False|None|self)\b|\b\d+(?:\.\d+)?\b/g;
+		let result='',start=0,match;
+		while((match=pattern.exec(source))) {
+			result+=esc(source.slice(start,match.index));
+			let token=match[0],kind=token.startsWith('#')?'Comment':/^['"]/.test(token)?'String':/^\d/.test(token)?'Number':'Keyword';
+			result+='<span class="code'+kind+'">'+esc(token)+'</span>';
+			start=pattern.lastIndex;
+		}
+		return result+esc(source.slice(start));
+	}
+	if(noteMarkdown) noteMarkdown.renderer.rules.fence=(tokens,index)=>{
+		let token=tokens[index],language=token.info.trim().split(/\s+/)[0].toLowerCase();
+		let content=['python','py'].includes(language)?highlightPython(token.content):esc(token.content);
+		return '<pre><code>'+content+'</code></pre>\n';
+	};
+	if (noteMarkdown) noteMarkdown.inline.ruler.before('escape','highlight_exact',(state,silent)=>{
+		let pos=state.pos;
+		if (!state.src.startsWith('==',pos)) return false;
+		let math=null, code=false, end=-1;
+		for (let i=pos+2;i<state.src.length;i++) {
+			let ch=state.src[i];
+			if (ch==='\n') break;
+			if (ch==='\\') {i++;continue}
+			if (ch==='`') {code=!code;continue}
+			if (code) continue;
+			if (ch==='$') {
+				let delimiter=state.src[i+1]==='$'?'$$':'$';
+				if (!math) math=delimiter;
+				else if (math===delimiter) math=null;
+				i+=delimiter.length-1;
+				continue;
+			}
+			if (!math && state.src.startsWith('==',i)) {end=i;break}
+		}
+		if (end<=pos+2) return false;
+		if (!silent) {
+			state.push('mark_open','mark',1);
+			let inner=[];
+			state.md.inline.parse(state.src.slice(pos+2,end),state.md,state.env,inner);
+			state.tokens.push(...inner);
+			state.push('mark_close','mark',-1);
+		}
+		state.pos=end+2;
+		return true;
+	});
+	// 已保存的数字序号可能写作 *2.* 并紧接中文；按斜体序号显示。
+	if (noteMarkdown) noteMarkdown.inline.ruler.before('emphasis','numbered_emphasis',(state,silent)=>{
+		let match=state.src.slice(state.pos).match(/^\*(\d+)\.\*/);
+		if(!match)return false;
+		if(!silent){
+			state.push('em_open','em',1);
+			let token=state.push('text','',0);token.content=match[1]+'.';
+			state.push('em_close','em',-1);
+		}
+		state.pos+=match[0].length;
+		return true;
+	});
+	if (noteMarkdown) noteMarkdown.inline.ruler.before('escape','strong_inline_code',(state,silent)=>{
+		let pos=state.pos,source=state.src;
+		if(!source.startsWith('**`',pos))return false;
+		let end=source.indexOf('`**',pos+3);
+		if(end<0 || source.slice(pos+3,end).includes('\n'))return false;
+		if(!silent){
+			state.push('strong_open','strong',1);
+			let code=state.push('code_inline','code',0);
+			code.content=source.slice(pos+3,end);
+			state.push('strong_close','strong',-1);
+		}
+		state.pos=end+3;
+		return true;
+	});
+	if (noteMarkdown) noteMarkdown.inline.ruler.before('escape','preserve_math_delimiters',(state,silent)=>{
+		let left=state.src.startsWith('\\[',state.pos)?'\\[':state.src.startsWith('\\(',state.pos)?'\\(':null;
+		if(!left)return false;
+		let right=left==='\\['?'\\]':'\\)',end=state.src.indexOf(right,state.pos+left.length);
+		if(end<0)return false;
+		if(!silent){let token=state.push('text','',0);token.content=state.src.slice(state.pos,end+right.length)}
+		state.pos=end+right.length;
+		return true;
+	});
+	function renderNoteText(text) {
+		return String(text).split(/(\*\*`[^`\n]+`\*\*|`[^`\n]+`)/g).map(part => {
+			if(part.startsWith('**`') && part.endsWith('`**'))return '<strong><code>'+esc(part.slice(3,-3))+'</code></strong>';
+			if (part.startsWith('`') && part.endsWith('`') && part.length > 1) return '<code>' + esc(part.slice(1, -1)) + '</code>';
+			return esc(part).replace(/\*\*([^*\n]+)\*\*/g, '<strong>$1</strong>').replace(/==([^=\n]+)==/g, '<mark>$1</mark>');
+		}).join('').replace(/&amp;(nbsp|lt|gt|amp|quot|apos|#\d+|#x[0-9a-f]+);/gi, '&$1;');
+	}
+	function renderTitleHtml(title) {
+		let source=String(title??'').replace(/\s*\n\s*/g,' ');
+		let html=noteMarkdown && typeof DOMPurify!=='undefined'
+			? DOMPurify.sanitize(noteMarkdown.renderInline(source), {
+				ALLOWED_TAGS:['strong','b','em','i','code','mark','span','sub','sup','br'],
+				ALLOWED_ATTR:[]
+			})
+			: renderNoteText(source);
+		return '<span class="inlineTitle">'+html+'</span>';
+	}
+	function renderMermaidFlowchart(source) {
+		let lines=String(source).split(/\r?\n/).map(line=>line.trim()).filter(Boolean);
+		if(!/^(?:flowchart|graph)\s+(?:TD|TB)$/i.test(lines.shift()||''))return null;
+		let nodes=new Map(),edges=[];
+		for(let line of lines) {
+			let node=line.match(/^([A-Za-z_][\w-]*)\s*\(\s*(['"])(.*?)\2\s*\)$/);
+			if(node){nodes.set(node[1],node[3]);continue}
+			let edge=line.match(/^([A-Za-z_][\w-]*)\s*(---|-->|-\.->)\s*([A-Za-z_][\w-]*)$/);
+			if(!edge)return null;
+			edges.push({from:edge[1],type:edge[2],to:edge[3]});
+			if(!nodes.has(edge[1]))nodes.set(edge[1],edge[1]);
+			if(!nodes.has(edge[3]))nodes.set(edge[3],edge[3]);
+		}
+		if(!nodes.size || nodes.size>30)return null;
+		let incoming=new Map([...nodes.keys()].map(id=>[id,0])),depth=new Map();
+		for(let edge of edges)incoming.set(edge.to,incoming.get(edge.to)+1);
+		let queue=[...nodes.keys()].filter(id=>incoming.get(id)===0);
+		for(let i=0;i<queue.length;i++) {
+			let id=queue[i],level=depth.get(id)||0;
+			for(let edge of edges.filter(item=>item.from===id)) {
+				depth.set(edge.to,Math.max(depth.get(edge.to)||0,level+1));
+				incoming.set(edge.to,incoming.get(edge.to)-1);
+				if(incoming.get(edge.to)===0)queue.push(edge.to);
+			}
+		}
+		if(queue.length!==nodes.size)return null;
+		let layers=[];
+		for(let id of nodes.keys())(layers[depth.get(id)||0]??=[]).push(id);
+		let width=Math.max(320,Math.max(...layers.map(layer=>layer.length))*130+60),height=layers.length*110+40;
+		let positions=new Map();
+		layers.forEach((layer,index)=>layer.forEach((id,item)=>positions.set(id,{x:width*(item+1)/(layer.length+1),y:55+index*110})));
+		let links=edges.map(edge=>{
+			let a=positions.get(edge.from),b=positions.get(edge.to),end=b.y-23;
+			return '<path d="M '+a.x+' '+(a.y+23)+' L '+b.x+' '+end+'" fill="none" stroke="#5969a8" stroke-width="2"'+(edge.type==='-.->'?' stroke-dasharray="5 4"':'')+'/>'
+				+(edge.type==='---'?'':'<path d="M '+(b.x-5)+' '+(end-7)+' L '+b.x+' '+end+' L '+(b.x+5)+' '+(end-7)+'" fill="none" stroke="#5969a8" stroke-width="2"/>');
+		}).join('');
+		let boxes=[...nodes].map(([id,label])=>{
+			let {x,y}=positions.get(id);
+			return '<rect x="'+(x-42)+'" y="'+(y-23)+'" width="84" height="46" rx="10" fill="#fff" stroke="#5969a8" stroke-width="2"/>'
+				+'<text x="'+x+'" y="'+(y+5)+'" text-anchor="middle" font-size="16" fill="#1b2c4a">'+esc(label)+'</text>';
+		}).join('');
+		return '<figure class="mermaidFigure"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+width+' '+height+'" role="img" aria-label="流程图">'+links+boxes+'</svg></figure>';
+	}
+	// 笔记原文中的表格等格式可显示；不放行脚本、事件属性或外部资源。
+	function prepareNoteMarkdown(source) {
+		let lines=String(source??'').split('\n'),fenced=false;
+		return lines.map((line,i)=>{
+			if(/^\s*(?:>\s*)?(`{3,}|~{3,})/.test(line)){fenced=!fenced;return line}
+			if(!fenced && i>0 && lines[i-1].trim() && /^\s*\|.+\|\s*$/.test(line) &&
+			   i+1<lines.length && /^\s*\|?\s*:?-{3,}/.test(lines[i+1])) return '\n'+line;
+			return line;
+		}).join('\n');
+	}
+	function formatPastedCode(source) {
+		let value=String(source??'');
+		if(/^[ \t]*(?:`{3,}|~{3,})/m.test(value)) return value;
+		let lines=value.split(/\r?\n/),first=lines.findIndex(line=>line.trim());
+		if(first<0 || lines.length-first<4) return value;
+		let python=/^(?:class\s+[A-Za-z_]\w*(?:\([^\n]*\))?:|(?:async\s+)?def\s+[A-Za-z_]\w*\([^\n]*\):|from\s+\S+\s+import\s+|import\s+\S+)/;
+		let generic=/^(?:function\s+\w+\s*\(|(?:export\s+)?(?:const|let|var)\s+\w+\s*=|(?:public|private|protected)\s+(?:class|interface)\s+\w+|#include\s*[<"]|using\s+\w+;)/;
+		let codeStart=lines.findIndex((line,index)=>index>=first && (python.test(line)||generic.test(line)));
+		if(codeStart<0 || !lines.slice(codeStart+1).some(line=>/^[ \t]{2,}\S/.test(line))) return value;
+		let startsWithDocstring=/^(?:"""|''')\s*$/.test(lines[first]);
+		let start=(codeStart===first || startsWithDocstring)?first:codeStart;
+		if(start>first && lines[start-1].trim()) return value;
+		let language=python.test(lines[codeStart])?'python':'';
+		return lines.slice(0,start).join('\n')+'\n\n```'+language+'\n'+lines.slice(start).join('\n').trimEnd()+'\n```';
+	}
+	function renderNoteHtml(source) {
+		if (noteMarkdown && typeof DOMPurify !== 'undefined') {
+			let diagrams=[],markdown=formatPastedCode(source).replace(/^[ \t]*```mermaid[^\r\n]*\r?\n([\s\S]*?)^[ \t]*```[ \t]*$/gim,(block,body)=>{
+				let svg=renderMermaidFlowchart(body);
+				if(!svg)return block;
+				let marker='MERMAID_SVG_'+diagrams.length+'_'+String(source).length+'_PLACEHOLDER';
+				diagrams.push({marker,svg});
+				return marker;
+			});
+			let formulas=[];
+			if(typeof katex!=='undefined') {
+				let lines=markdown.split(/\r?\n/),normalized=[],fenced=false;
+				for(let i=0;i<lines.length;i++) {
+					let line=lines[i];
+					if(/^\s*(?:`{3,}|~{3,})/.test(line.trim())){fenced=!fenced;normalized.push(line);continue}
+					let opening=!fenced&&line.match(/^([ \t]*(?:>[ \t]*)*)\$\$[ \t]*$/);
+					if(!opening){normalized.push(line);continue}
+					let prefix=opening[1],end=i+1,parts=[];
+					for(;end<lines.length;end++) {
+						if(!lines[end].startsWith(prefix))break;
+						let content=lines[end].slice(prefix.length);
+						if(content.trim()==='$$')break;
+						parts.push(content);
+					}
+					if(end>=lines.length || !lines[end].startsWith(prefix) || lines[end].slice(prefix.length).trim()!=='$$' || !parts.join('').trim()){
+						normalized.push(line);continue;
+					}
+					let marker='DISPLAY_MATH_'+formulas.length+'_'+markdown.length+'_PLACEHOLDER';
+					formulas.push({marker,html:katex.renderToString(parts.join('\n').trim(),{displayMode:true,throwOnError:false,trust:false})});
+					normalized.push(prefix+marker);
+					i=end;
+				}
+				markdown=normalized.join('\n');
+			}
+			let safe=DOMPurify.sanitize(noteMarkdown.render(prepareNoteMarkdown(markdown)), {
+				ALLOWED_TAGS: ['p','br','hr','h1','h2','h3','h4','h5','h6','blockquote','ul','ol','li','table','thead','tbody','tfoot','tr','th','td','caption','colgroup','col','center','div','span','b','strong','i','em','u','s','del','code','pre','sub','sup','mark','a'],
+				ALLOWED_ATTR: ['rowspan','colspan','class'],
+				FORBID_TAGS: ['img','script','style','iframe','object','embed','svg','math','form','input','button']
+			});
+			for(let diagram of diagrams)safe=safe.replace('<p>'+diagram.marker+'</p>',diagram.svg).split(diagram.marker).join(diagram.svg);
+			for(let formula of formulas)safe=safe.replace('<p>'+formula.marker+'</p>',formula.html).split(formula.marker).join(formula.html);
+			return safe;
+		}
+		const allowed = new Set(['table','thead','tbody','tfoot','tr','th','td','caption','colgroup','col','center','div','span','p','br','b','strong','i','em','u','s','code','pre','blockquote','ul','ol','li','sub','sup','h3','h4','h5','h6']);
+		const input = String(source ?? '');
+		const tags = /<\s*(\/?)\s*([a-z][a-z0-9]*)\b([^>]*)>/gi;
+		let result = '', start = 0, match;
+		while ((match = tags.exec(input))) {
+			result += renderNoteText(input.slice(start, match.index));
+			let closing = !!match[1], tag = match[2].toLowerCase();
+			if (allowed.has(tag)) {
+				if (tag === 'br') result += '<br>';
+				else if (closing) result += `</${tag}>`;
+				else {
+					let attrs = '';
+					if (tag === 'td' || tag === 'th') {
+						for (let name of ['rowspan', 'colspan']) {
+							let found = match[3].match(new RegExp("\\b" + name + "\\s*=\\s*[\"']?(\\d{1,2})(?!\\d)", 'i'));
+							if (found && +found[1] >= 1 && +found[1] <= 20) attrs += ` ${name}="${+found[1]}"`;
+						}
+					}
+					result += `<${tag}${attrs}>`;
+				}
+			} else if (tag !== 'img') result += esc(match[0]);
+			start = tags.lastIndex;
+		}
+		return result + renderNoteText(input.slice(start));
+	}
+	function imageAnnotationHtml(card) {
+		return card.annotation ? `<div class="imageAnnotation"><strong class="annotationLabel">图片注释</strong>${renderNoteHtml(card.annotation)}</div>` : '';
+	}
+	function renderCardContent(card, overview=false) {
+		let parts=card.merged_parts;
+		if(!parts) return card.kind==='image'
+			? `${overview?'<strong>':'<div>'}${esc(card.original||card.section)}${overview?'</strong>':'</div>'}<img class="materialImage" ${overview?'loading="lazy" decoding="async"':'fetchpriority="high"'} src="${mediaUrl(card)}" alt="${esc(card.original||card.section)}">${imageAnnotationHtml(card)}<small>图片：${esc(card.media_path||'已保存图片')}</small>`
+			: renderNoteHtml(card.original);
+		return '<div class="mergedCard">'+parts.map((stored,index)=>{
+			let part=index===0?{...stored,original:card.original,section:card.section,annotation:card.annotation}:stored;
+			let annotationButton=overview && index>0?'<button class="btn outline" data-image-annotation data-id="'+esc(part.id)+'">'+(part.annotation?'编辑注释':'添加注释')+'</button>':'';
+			let imageTitle=overview?`<div class="mergedPartHeader"><strong>${esc(part.original||part.section)}</strong>${annotationButton}</div>`:`<div>${esc(part.original||part.section)}</div>`;
+			let imageLoading=overview?'loading="lazy" decoding="async"':index===0?'fetchpriority="high"':'loading="lazy"';
+			return '<section class="mergedPart">'+(part.kind==='image'
+				? `${imageTitle}<img class="materialImage" ${imageLoading} src="${mediaUrl(part)}" alt="${esc(part.original||part.section)}">${imageAnnotationHtml(part)}<small>图片：${esc(part.media_path||'已保存图片')}</small>`
+				: renderNoteHtml(part.original))+'</section>';
+		}).join('')+'</div>';
+	}
+	function mediaUrl(card) {
+		let url='/api/media/'+encodeURIComponent(card.media_id);
+		return card.media_created ? url+'?v='+encodeURIComponent(card.media_created) : url;
+	}
+	function typesetMath(element) {
+		if (typeof renderMathInElement !== 'function') return;
+		renderMathInElement(element, {
+			delimiters: [
+				{left: '$$', right: '$$', display: true},
+				{left: '\\[', right: '\\]', display: true},
+				{left: '$', right: '$', display: false},
+				{left: '\\(', right: '\\)', display: false}
+			],
+			throwOnError: false,
+			trust: false
+		});
+	}
+	
+	async function api(path, data) {
+		let binary = typeof Blob !== 'undefined' && data instanceof Blob;
+		let r = await fetch(path, {
+			method: data === undefined ? 'GET' : 'POST',
+			headers: data === undefined ? {} : {'Content-Type': binary ? 'application/octet-stream' : 'application/json'},
+			body: data === undefined ? undefined : binary ? data : JSON.stringify(data)
+		});
+		const connectionError = () => Error('服务暂时无法连接' + (r.status ? '（HTTP ' + r.status + '）' : '') + '。请检查电脑上的网页服务和 Cpolar 隧道，然后重试。');
+		const contentType = r.headers?.get?.('content-type') || '';
+		if (contentType && !contentType.toLowerCase().includes('application/json')) throw connectionError();
+		let x;
+		try {x = await r.json()}
+		catch (e) {throw connectionError()}
+		if (!x || typeof x !== 'object') throw connectionError();
+		if (!r.ok) throw Error(x.error || r.status);
+		return x
+	}
+	
+	function shuffle(arr) {
+		let a = [...arr];
+		for (let i = a.length - 1; i > 0; i--) {
+			let j = Math.floor(Math.random() * (i + 1));
+			[a[i], a[j]] = [a[j], a[i]]
+		}
+		return a
+	}
+	
+	function chapterName(note) {
+		return String(note).replace(/\.(md|markdown|json)$/i, '')
+	}
+
+	function showStats(s) {
+		for (let [a, b] of [['Total', 'total'], ['Studied', 'studied'], ['Wrong', 'wrong'], ['Favorites', 'favorites']]) $('n' + a).textContent = s[b]
+	}
+
+	let examDatabasePath='当前考试数据库',examBackupDir='数据库旁的 backups';
+	async function syncCards() {
+		let data = await api('/api/cards');
+		if(data.exam?.title){$('appTitle').textContent=data.exam.title;document.title=data.exam.title}
+		if(data.exam?.database)examDatabasePath=data.exam.database;
+		if(data.exam?.backup_dir)examBackupDir=data.exam.backup_dir;
+		all = data.cards;
+		knowledgeRows = all.filter(card=>card.kind==='knowledge').map(card=>({
+			id:card.id,note:card.note,h2:card.h2,section:card.section,line:card.line,content:card.original,original:card.original,
+			merged_parts:card.merged_parts
+		}));
+		pinnedId = data.pinned_id || null;
+		showStats(data.stats);
+		updatePinnedControls();
+		if (activeView === 'cards') showList()
+	}
+	function localStats() {
+		return {total:all.length,studied:all.filter(card=>card.attempts>0).length,
+			wrong:all.filter(card=>card.wrong_marked).length,
+			favorites:all.filter(card=>card.favorite).length};
+	}
+	function replaceLocalCard(card,stats) {
+		let id=card.id;
+		let allPosition=all.findIndex(card=>card.id===id);
+		if (allPosition>=0) all[allPosition]=card;
+		list=list.map(item=>item.id===id?card:item);
+		if (picked?.id===id) picked=card;
+		showStats(stats||localStats());
+	}
+	function applyCardUpdate(result) {
+		if (!result.card || !result.stats) return false;
+		replaceLocalCard(result.card,result.stats);
+		return true;
+	}
+
+	async function refresh({randomQueueKnownIds=null}={}) {
+		await syncCards();
+		updateSectionOptions();
+		if (randomQueueKnownIds && randomBatchIds.length) {
+			let section=$('section').value;
+			for (let card of all) if (!randomQueueKnownIds.has(card.id) && !randomBatchIds.includes(card.id) &&
+				(card.attempts===0 || card.random_return_pending) &&
+				!card.wrong_marked && !card.favorite && (!section || card.note===section)) randomBatchIds.push(card.id);
+		}
+		pick();
+	}
+	function updateSectionOptions() {
+		let current = $('section').value;
+		let available = [...new Set(all.filter(c => mode === 'retry' ? retryEligible(c) : matchesMode(c)).map(c => c.note))];
+		let opts = ['<option value="">全部章节</option>', ...available.map(v => `<option value="${esc(v)}">${esc(chapterName(v))}</option>`)];
+		$('section').innerHTML = opts.join('');
+		$('section').value = available.includes(current) ? current : '';
+		return current !== $('section').value;
+	}
+	function removeLocalCard(id) {
+		all=all.filter(card=>card.id!==id);
+		knowledgeRows=knowledgeRows.filter(card=>card.id!==id);
+		list=list.filter(card=>card.id!==id);
+		if (pinnedId===id) pinnedId=null;
+		if (recentAnswered?.id===id) recentAnswered=null;
+		showStats(localStats());
+		updatePinnedControls();
+		updateSectionOptions();
+	}
+	
+	function matchesMode(c) {
+		if (mode === 'random') return (c.attempts === 0 || c.random_return_pending) && !c.wrong_marked && !c.favorite;
+		if (mode === 'wrong') return !!(c.wrong_marked || c.favorite) && !c.round1_done;
+		if (mode === 'retry') return retryEligible(c) && !c.retry_deferred;
+		return true
+	}
+	function retryEligible(c) {
+		return !!(c.wrong_marked || c.favorite) && !!c.round1_done;
+	}
+	function hasDeferredRetry() {
+		let section=$('section').value;
+		return all.some(c => retryEligible(c) && c.retry_deferred && (!section || c.note===section));
+	}
+	function matches(c) {
+		let sec = $('section').value;
+		return (!sec || c.note === sec) && matchesMode(c);
+	}
+	function pick() {
+		updateSectionOptions();
+		list = all.filter(matches);
+		if ($('studyOrder').value === 'source') {
+			let sourcePosition=new Map(all.map((card,position)=>[card.id,position]));
+			list.sort((a,b)=>a.note.localeCompare(b.note,'zh') || sourcePosition.get(a.id)-sourcePosition.get(b.id));
+		} else if (mode === 'random') {
+			let available = new Map(list.map(c => [c.id, c]));
+			randomBatchIds = randomBatchIds.filter(id => available.has(id));
+			let known = new Set(randomBatchIds);
+			randomBatchIds.push(...shuffle(list.filter(c => !known.has(c.id))).map(c => c.id));
+			list = randomBatchIds.map(id => available.get(id));
+		} else if (mode !== 'random') list = shuffle(list);
+		index = 0;
+		render();
+		if (mode === 'retry' && !list.length && hasDeferredRetry()) void startNextRetryBatch();
+	}
+
+	function renderMarks() {
+		$('favorite').classList.toggle('hidden', !picked);
+		$('favorite').textContent = picked && picked.favorite ? '★ 取消收藏' : '☆ 收藏知识点';
+		if (!picked) {
+			$('marks').textContent = '';
+			return
+		}
+		$('marks').textContent = [picked.wrong_marked ? '不理解' : '', picked.persistent_unknown ? '始终不理解' : '', picked.favorite ? '★ 已收藏' : ''].filter(Boolean).join(' · ')
+	}
+
+	function renderMarkActions() {
+		let buttons = [];
+		if (picked && (mode === 'retry' || mode === 'wrong') && lastCorrect) {
+			if (picked.wrong_marked) buttons.push('<button class="btn outline" data-flag="wrong_marked">取消不理解标记</button>');
+			if (picked.favorite) buttons.push('<button class="btn outline" data-flag="favorite">取消收藏</button>');
+			if (mode === 'retry' && picked.wrong_marked && picked.favorite) buttons.push('<button class="btn danger" id="clearAllMarks">取消全部标记并移出再练</button>')
+		}
+		$('markActions').innerHTML = buttons.join('');
+		$('markActions').querySelectorAll('[data-flag]').forEach(b => b.onclick = () => setFlag(b.dataset.flag, false));
+		let clear = $('clearAllMarks');
+		if (clear) clear.onclick = clearAllMarks
+	}
+	function renderRecentAnswer() {
+		let item = recentAnswered && all.find(c => c.id === recentAnswered.id);
+		let panel = $('recentAnswer');
+		panel.classList.toggle('hidden', !item || item.id===picked?.id);
+		if (!item || item.id===picked?.id) {panel.innerHTML = ''; return}
+		let label = item.kind === 'image' ? '图片' : '知识点';
+		let actions = '';
+		if (recentAnswered.correct && (recentAnswered.mode === 'wrong' || recentAnswered.mode === 'retry')) {
+			if (item.wrong_marked) actions += '<button class="btn outline" data-recent-flag="wrong_marked">取消不理解标记</button> ';
+			if (item.favorite) actions += '<button class="btn outline" data-recent-flag="favorite">取消收藏</button>';
+		}
+		let destination = recentAnswered.correct && recentAnswered.mode === 'wrong' ? ' · 已降到随机抽查下一轮'
+			: recentAnswered.correct && recentAnswered.mode === 'retry' ? ' · 已降到不理解与收藏' : '';
+		let result = recentAnswered.skipped ? '' : '已' + (recentAnswered.correct ? (item.kind === 'image' ? '了解' : '理解') : (item.kind === 'image' ? '标记不了解' : '标记不理解'));
+		panel.innerHTML = `<div class="topfilters"><button class="recentBack" type="button" data-recent-back>← 上一条${label}${result}：${esc(item.h2 || item.section || item.note)}${destination}</button>${actions}</div>`;
+		panel.querySelectorAll('[data-recent-back]').forEach(b => b.onclick = goToRecent);
+		panel.querySelectorAll('[data-recent-flag]').forEach(b => b.onclick = () => setRecentFlag(b.dataset.recentFlag));
+	}
+	function goToRecent() {
+		if (locked || !recentAnswered) return;
+		let item=all.find(c=>c.id===recentAnswered.id);
+		if (!item) return;
+		if (index>0 && list[index-1]?.id===item.id) index--;
+		else list.splice(index,0,item);
+		recentAnswered=null;
+		render();
+	}
+	async function setRecentFlag(flag) {
+		if (locked || !recentAnswered) return;
+		await changeFlags(recentAnswered.id,{[flag]:false});
+	}
+	
+	let prefetchedImageUrl = '', prefetchedImage = null;
+	function prefetchUpcomingImage() {
+		if (typeof Image === 'undefined') return;
+		let upcoming=list.slice(index+1,index+4).find(card=>card.kind==='image');
+		if (!upcoming) return;
+		let url=mediaUrl(upcoming);
+		if (url===prefetchedImageUrl) return;
+		prefetchedImageUrl=url;
+		prefetchedImage=new Image();
+		prefetchedImage.src=url;
+	}
+	function render() {
+		lastCorrect = false;
+		picked = list[index] || null;
+		$('previous').classList.toggle('hidden', $('studyOrder').value !== 'source');
+		$('previous').disabled = $('studyOrder').value !== 'source' || index <= 0;
+		$('shuffle').textContent = $('studyOrder').value === 'source' ? '从头开始' : '重新随机';
+		$('prompt').classList.toggle('richNote', !!picked && picked.kind !== 'image' && !!noteMarkdown && typeof DOMPurify !== 'undefined');
+		$('feedback').classList.add('hidden');
+		$('deleteCurrent').classList.toggle('hidden', !picked);
+		$('deleteCurrent').textContent = picked?.kind === 'image' ? '删除当前图片卡片' : '删除当前知识点';
+		$('editCurrent').classList.toggle('hidden', !picked);
+		$('editCurrent').textContent = picked?.merged_parts ? '编辑组合卡片' : picked?.kind === 'image' ? (picked.annotation ? '编辑图片注释' : '添加图片注释') : '修改 / 拆分卡片';
+		$('viewTitle').textContent = ({random: '随机抽查', wrong: '不理解与收藏 · 第一轮', retry: '再次查看 · 第二轮'})[mode];
+		$('next').textContent = '跳过 / 下一题 →';
+		$('count').textContent = picked ? `${index + 1} / ${list.length} 条` : index >= list.length && list.length ? `已完成 ${list.length} 条` : '0 条';
+		renderMarks();
+		renderMarkActions();
+		renderRecentAnswer();
+		if (!picked) {
+			$('heading').textContent = index >= list.length && list.length ? '本轮练习完成' : '暂无可练习的知识点';
+			$('prompt').textContent = !all.length ? '请进入「知识点管理」导入 Markdown 笔记。'
+				: index >= list.length && list.length ? '本次练习已完成。'
+				: mode === 'retry' ? '当前没有已查看过、且仍保留不理解或收藏标记的知识点。'
+				: mode === 'random' ? '当前章节没有未查看或降档待抽的知识点。'
+				: '当前章节没有待查看的不理解或收藏内容。';
+			$('source').textContent = '';
+			$('options').innerHTML = '';
+			$('reviewInfo').textContent = '';
+			$('next').disabled = true;
+			updatePageNavigator();
+			return
+		}
+		$('next').disabled = false;
+		$('heading').textContent = chapterName(picked.note);
+		$('source').innerHTML = renderTitleHtml(picked.kind === 'knowledge' ? (picked.section || picked.h2) : (picked.h2 || picked.section)) + ' · ' + esc(picked.note) + ' · 第 ' + esc(picked.line || '?') + ' 行';
+		$('prompt').innerHTML = renderCardContent(picked);
+		typesetMath($('prompt'));
+		optionValues = picked.kind === 'image' ? ['了解', '不了解'] : ['理解', '不理解'];
+		$('options').innerHTML = optionValues.map(v => `<button class="option">${esc(v)}</button>`).join('');
+		$('options').querySelectorAll('.option').forEach((b, i) => b.onclick = () => choose(optionValues[i]));
+		$('reviewInfo').textContent = `已看 ${picked.attempts} 次 · 标记不理解 ${picked.wrong} 次`;
+		prefetchUpcomingImage();
+		updatePageNavigator();
+	}
+	function setStudyLocked(value,label='保存中…') {
+		locked=value;
+		$('saveStatus').textContent=value?label:'';
+		$('next').disabled=value || !picked;
+		$('previous').disabled=value || $('studyOrder').value!=='source' || index<=0;
+		for (let id of ['shuffle','favorite','editCurrent','deleteCurrent','section','studyOrder']) $(id).disabled=value;
+		$('options').querySelectorAll('.option').forEach(button=>button.disabled=value);
+		$('markActions').querySelectorAll('button').forEach(button=>button.disabled=value);
+		document.querySelectorAll('[data-view]').forEach(button=>button.disabled=value);
+	}
+
+	async function changeFlags(id,changes) {
+		if (locked) return;
+		let before=all.find(card=>card.id===id);
+		if (!before) return;
+		replaceLocalCard({...before,...changes});
+		renderMarks();
+		renderMarkActions();
+		renderRecentAnswer();
+		setStudyLocked(true);
+		try {
+			let result=await api('/api/flags', {id,...changes});
+			if (!applyCardUpdate(result)) await syncCards();
+			if (updateSectionOptions()) pick();
+		} catch (e) {
+			replaceLocalCard(before);
+			alert(e.message)
+		} finally {
+			setStudyLocked(false);
+			renderMarks();
+			renderMarkActions();
+			renderRecentAnswer();
+		}
+	}
+	async function setFlag(flag, value) {
+		if (locked || !picked) return;
+		await changeFlags(picked.id,{[flag]:value});
+	}
+	async function clearAllMarks() {
+		if (locked || !picked) return;
+		await changeFlags(picked.id,{wrong_marked:false,favorite:false});
+	}
+	$('favorite').onclick = () => picked && setFlag('favorite', !picked.favorite);
+	
+	async function choose(val) {
+		if (locked || !picked) return;
+		const c = picked;
+		const previousIndex=index, previousBatch=[...randomBatchIds], previousRecent=recentAnswered;
+		const moved=index+1<list.length;
+		locked=true;
+		if (moved) {
+			recentAnswered={id:c.id,correct:val===c.answer,mode};
+			advance(true);
+		}
+		setStudyLocked(true,'上一题保存中…');
+		try {
+			const res = await api('/api/answer', {id: c.id, selected: val, mode});
+			if (!applyCardUpdate(res)) await syncCards();
+			const sectionChanged=updateSectionOptions();
+			recentAnswered = {id: c.id, correct: res.correct, mode};
+			if (moved) renderRecentAnswer();
+			else await advance(true);
+			if (sectionChanged) pick();
+		} catch (e) {
+			if (moved) {
+				index=previousIndex;
+				randomBatchIds=previousBatch;
+				recentAnswered=previousRecent;
+				render();
+			}
+			if (e.message === '无效答案' || e.message === '卡片不存在') {
+				try {
+					await refresh();
+					alert(e.message === '无效答案' ? '知识点已更新，请重新选择。' : '这条知识点已删除，已切换到下一条。');
+					return
+				} catch (refreshError) {alert(refreshError.message); return}
+			}
+			alert(e.message)
+		} finally {
+			setStudyLocked(false);
+		}
+	}
+	
+	let retryBatchLoading=false;
+	async function startNextRetryBatch() {
+		if(retryBatchLoading)return;
+		retryBatchLoading=true;
+		setStudyLocked(true,'正在进入下一轮…');
+		try {
+			if(hasDeferredRetry()) {
+				await api('/api/retry/next-batch',{note:$('section').value||null});
+				await syncCards();
+			}
+			pick();
+		} catch(e) {alert('进入下一轮失败：'+e.message)}
+		finally {retryBatchLoading=false;setStudyLocked(false)}
+	}
+	function advance(answered = false) {
+		if (mode === 'random' && answered && picked) randomBatchIds = randomBatchIds.filter(id => id !== picked.id);
+		index++;
+		if (index >= list.length && mode === 'retry') return startNextRetryBatch();
+		if (index >= list.length && $('studyOrder').value === 'random' && (mode === 'random' || mode === 'wrong')) return pick();
+		render()
+	}
+	$('next').onclick = () => {if (!locked && picked) {recentAnswered={id:picked.id,mode,skipped:true};advance(false)}};
+	$('previous').onclick = () => {if (!locked && $('studyOrder').value === 'source' && index > 0) {index--;render()}};
+	$('shuffle').onclick = () => {if (!locked) {recentAnswered=null;if (mode === 'random' && $('studyOrder').value === 'random') randomBatchIds=[];pick()}};
+	$('deleteCurrent').onclick = async () => {
+		if (locked || !picked || !confirm(picked.merged_parts
+			? `确定删除这张组合卡片中的全部 ${picked.merged_parts.length} 个内容及其学习记录吗？`
+			: `确定删除当前${picked.kind === 'image' ? '图片' : '知识点'}及其学习记录吗？`)) return;
+		let id = picked.id, kind = picked.kind;
+		setStudyLocked(true,'正在删除…');
+		try {await api('/api/cards/delete-item', {id, kind}); removeLocalCard(id); if (updateSectionOptions()) pick(); else render()}
+		catch (e) {alert(e.message)}
+		finally {setStudyLocked(false)}
+	};
+	$('editCurrent').onclick = () => {if (!locked && picked) picked.merged_parts ? openGroupEditor(picked.id) : picked.kind === 'image' ? openImageAnnotation(picked.id) : openKnowledge(picked.id)};
+	$('section').onchange = () => {if (!locked) {recentAnswered=null;pick()}};
+	$('studyOrder').onchange = () => {if (!locked) {recentAnswered=null;if (mode === 'random') randomBatchIds=[];pick()}};
+	document.querySelectorAll('[data-view]').forEach(b => b.onclick = () => {
+		if (locked) return;
+		document.querySelectorAll('[data-view]').forEach(x => x.classList.toggle('active', x === b));
+		let target = b.dataset.view;
+		if (target!=='manage' && lastImportReportPhase.endsWith(':completed')) $('importReport').open=false;
+		activeView = target;
+		recentAnswered = null;
+		['study', 'cards', 'manage', 'backup'].forEach(v => $(v).classList.toggle('hidden', !(['random', 'wrong', 'retry'].includes(target) ? v === 'study' : v === target)));
+		if (['random', 'wrong', 'retry'].includes(target)) {
+			mode = target;
+			pick()
+		} else if (target === 'cards') showList(); else if (target === 'manage') updateNotes(); else if (target === 'backup') saveHostBackup();
+		updatePageNavigator();
+	});
+	
+	let overviewFocusId = null;
+	function updatePinnedControls() {
+		let card=all.find(c=>c.id===pinnedId);
+		let label=card ? `已钉住：${chapterName(card.note)} / ${card.h2||card.section||'未分组'} · 第 ${card.line||'?'} 行` : '尚未钉住知识点';
+		$('jumpPinnedOverview').disabled=!card;
+		$('pinnedOverviewLabel').textContent=label;
+	}
+	async function pinCard(id) {
+		try {
+			let result=await api('/api/cards/pin',{id});
+			pinnedId=result.pinned_id;
+			updatePinnedControls();
+			if(activeView==='cards')showList();
+		} catch(e) {alert(e.message)}
+	}
+	function jumpToPinned() {
+		if(!pinnedId)return;
+		if(activeView!=='cards') {
+			let tab=[...document.querySelectorAll('[data-view]')].find(x=>x.dataset.view==='cards');
+			if(tab)tab.onclick();
+		}
+		$('cardSearch').value='';
+		$('cardStatusFilter').value='all';
+		showList();
+		let row=[...$('cardList').querySelectorAll('[data-card-id]')].find(x=>x.dataset.cardId===pinnedId);
+		if(!row)return alert('钉住的知识点已不存在，请刷新页面');
+		let topic=row.closest('details.topicGroup'),chapter=row.closest('details.chapterGroup');
+		if(chapter)chapter.open=true;
+		if(topic)topic.open=true;
+		row.scrollIntoView({block:'center'});
+	}
+	$('jumpPinnedOverview').onclick=jumpToPinned;
+	function showList() {
+		let chapterState=new Map([...$('cardList').querySelectorAll('details.chapterGroup[data-chapter]')].map(x=>[x.dataset.chapter,x.open]));
+		let topicState=new Map([...$('cardList').querySelectorAll('details.topicGroup[data-note][data-topic]')].map(x=>[JSON.stringify([x.dataset.note,x.dataset.topic]),x.open]));
+		let scrollY=typeof window.scrollY==='number'?window.scrollY:null;
+		let chapters = new Map(), q = searchText($('cardSearch').value);
+		let status=$('cardStatusFilter').value || 'all';
+		let visibleCards=all.filter(card=>status==='all' ||
+			status==='wrong' && (card.wrong_marked || card.favorite) && !card.round1_done ||
+			status==='retry' && retryEligible(card));
+		let visibleIds=new Set(visibleCards.map(card=>card.id));
+		let knowledgeCount=new Map(), imageCount=new Map(), topicImageCount=new Map(), previousKnowledge=new Map(), lastByTopic=new Map();
+		let order=new Map(all.map((card,i)=>[card.id,i])),previousVisible=new Map();
+		for(let i=1;i<visibleCards.length;i++) if(visibleCards[i].note===visibleCards[i-1].note && visibleCards[i].h2===visibleCards[i-1].h2)
+			previousVisible.set(visibleCards[i].id,visibleCards[i-1]);
+		for(let card of visibleCards) {
+			let count=(card.merged_parts||[card]).filter(part=>part.kind==='image').length;
+			imageCount.set(card.note,(imageCount.get(card.note)||0)+count);
+			let key=JSON.stringify([card.note,card.h2||card.section||'未分组']);
+			topicImageCount.set(key,(topicImageCount.get(key)||0)+count);
+		}
+		for (let row of knowledgeRows.filter(row=>visibleIds.has(row.id))) {
+			knowledgeCount.set(row.note,(knowledgeCount.get(row.note)||0)+1);
+			let key=JSON.stringify([row.note,row.h2]);
+			previousKnowledge.set(row.id,lastByTopic.get(key));
+			lastByTopic.set(key,row);
+		}
+		function group(note,title) {
+			if (!chapters.has(note)) chapters.set(note,new Map());
+			let topics=chapters.get(note);
+			if (!topics.has(title)) topics.set(title,{knowledge:[],cards:[]});
+			return topics.get(title);
+		}
+		for (let k of knowledgeRows.filter(row=>visibleIds.has(row.id))) {
+			if (matchesSearch(q,[k.note,chapterName(k.note),k.h2,k.content,...(k.merged_parts||[]).flatMap(part=>[part.original,part.annotation])]))
+				group(k.note,k.h2||'未分组').knowledge.push(k);
+		}
+		for (let c of visibleCards.filter(c=>c.kind==='image')) {
+			if (matchesSearch(q,[c.note,chapterName(c.note),c.h2,c.section,c.original,c.annotation,c.media_path,
+				...(c.merged_parts||[]).flatMap(part=>[part.original,part.annotation,part.media_path])]))
+				group(c.note,c.h2||c.section||'未分组').cards.push(c);
+		}
+		function overviewRows(group,title) {
+			return [...group.knowledge.map(item=>({kind:'knowledge',item})),...group.cards.map(item=>({kind:'image',item}))]
+				.sort((a,b)=>order.get(a.item.id)-order.get(b.item.id))
+				.map(({kind,item})=>{
+					if(kind==='knowledge') {
+					let k=item,prior=previousKnowledge.get(k.id);
+						return '<div class="row'+(k.id===overviewFocusId?' currentEdit':'')+(k.id===pinnedId?' pinnedCard':'')+'" data-card-id="'+esc(k.id)+'"><small>知识点 · '+renderTitleHtml(k.section||title)+' · 第 '+k.line+' 行</small><div class="preview'+(noteMarkdown && typeof DOMPurify !== 'undefined' ? ' richNote' : '')+'">'+renderCardContent(k,true)+'</div><div class="topfilters">'+(k.merged_parts?'<button class="btn outline" data-edit-group data-id="'+esc(k.id)+'">编辑组合</button>':'')+'<button class="btn outline" data-edit-knowledge data-id="'+esc(k.id)+'">'+(k.merged_parts?'修改 / 拆分首段':'编辑 / 拆分')+'</button><button class="btn danger" data-delete-knowledge data-id="'+esc(k.id)+'">删除知识点</button><button class="btn outline" data-pin-card data-id="'+esc(k.id)+'">'+(k.id===pinnedId?'📌 取消钉住':'📌 钉住')+'</button>'+(prior?'<button class="btn outline" data-merge-previous data-id="'+esc(k.id)+'" data-previous="'+esc(prior.id)+'">并入上一条</button>':'')+'</div></div>';
+					}
+					let c=item,prior=previousVisible.get(c.id);
+					return '<div class="row'+(c.id===pinnedId?' pinnedCard':'')+(c.id===overviewFocusId?' currentEdit':'')+'" data-card-id="'+esc(c.id)+'"><small>图片 · 已看 '+c.attempts+' 次 · 不理解 '+c.wrong+' 次'+(c.wrong_marked?' · 已标记不了解':'')+(c.favorite?' · 已收藏':'')+'</small><div class="preview">'+renderCardContent(c,true)+'</div><div class="topfilters">'+(c.merged_parts?'<button class="btn outline" data-edit-group data-id="'+esc(c.id)+'">编辑组合</button>':'')+'<button class="btn outline" data-image-annotation data-id="'+esc(c.id)+'">'+(c.annotation?'编辑注释':'添加注释')+'</button><button class="btn outline" data-pin-card data-id="'+esc(c.id)+'">'+(c.id===pinnedId?'📌 取消钉住':'📌 钉住')+'</button><button class="btn danger" data-delete-image data-id="'+esc(c.id)+'">删除图片卡片</button>'+(prior?'<button class="btn outline" data-merge-image data-id="'+esc(c.id)+'" data-previous="'+esc(prior.id)+'">并入上一张</button>':'')+'</div></div>';
+				}).join('');
+		}
+		$('cardList').innerHTML = chapters.size ? [...chapters].sort((a,b)=>a[0].localeCompare(b[0],'zh')).map(([note,topics]) =>
+			'<details class="chapterGroup" data-chapter="'+esc(note)+'" '+(chapterState.get(note)===false?'':'open')+'><summary>'+esc(chapterName(note))+' <small>'+(knowledgeCount.get(note)||0)+' 条知识点 · '+(imageCount.get(note)||0)+' 张图片</small></summary>'
+			+ [...topics].map(([title,group]) => '<details class="topicGroup" data-note="'+esc(note)+'" data-topic="'+esc(title)+'" '+(topicState.get(JSON.stringify([note,title]))===false?'':'open')+'><summary>'+esc(title)+' <small>'+group.knowledge.length+' 条知识点 · '+(topicImageCount.get(JSON.stringify([note,title]))||0)+' 张图片</small></summary>'
+				+ overviewRows(group,title)
+				+ '</details>').join('')+'</details>'
+		).join('') : '没有匹配的知识点或图片';
+		typesetMath($('cardList'));
+		$('cardList').querySelectorAll('[data-edit-knowledge]').forEach(b => b.onclick=()=>openKnowledge(b.dataset.id));
+		$('cardList').querySelectorAll('[data-edit-group]').forEach(b => b.onclick=()=>openGroupEditor(b.dataset.id));
+		$('cardList').querySelectorAll('[data-delete-knowledge]').forEach(b => b.onclick=()=>deleteKnowledgePoint(b.dataset.id));
+		$('cardList').querySelectorAll('[data-merge-previous]').forEach(b => b.onclick=()=>mergeKnowledgePoint(b.dataset.id,b.dataset.previous));
+		$('cardList').querySelectorAll('[data-merge-image]').forEach(b => b.onclick=()=>mergeImageIntoPrevious(b.dataset.id,b.dataset.previous));
+		$('cardList').querySelectorAll('[data-pin-card]').forEach(b => b.onclick=()=>pinCard(b.dataset.id));
+		$('cardList').querySelectorAll('[data-image-annotation]').forEach(b => b.onclick=()=>openImageAnnotation(b.dataset.id));
+		$('cardList').querySelectorAll('[data-delete-image]').forEach(b => b.onclick=()=>deleteOverviewImage(b.dataset.id));
+		if(scrollY!==null && typeof window.scrollTo==='function')window.scrollTo(0,scrollY);
+		updatePageNavigator();
+	}
+	async function deleteOverviewImage(id) {
+		let card=all.find(item=>item.id===id);
+		if(!confirm(card?.merged_parts
+			? `确定删除这张组合卡片中的全部 ${card.merged_parts.length} 个内容及其学习记录吗？`
+			: '确定删除这张图片卡片吗？删除后学习记录也会移除。'))return;
+		try {await api('/api/cards/delete-item',{id,kind:'image'});removeLocalCard(id);showList()}
+		catch(e) {alert(e.message)}
+	}
+	$('cardSearch').oninput = showList;
+	$('cardStatusFilter').onchange = showList;
+	$('expandAll').onclick = () => $('cardList').querySelectorAll('details').forEach(x => x.open = true);
+	$('collapseAll').onclick = () => $('cardList').querySelectorAll('details').forEach(x => x.open = false);
+	function focusOverviewCard(id) {
+		if(activeView!=='cards')return;
+		let row=[...$('cardList').querySelectorAll('[data-card-id]')].find(x=>x.dataset.cardId===id);
+		if(row && typeof row.scrollIntoView==='function')row.scrollIntoView({block:'center'});
+	}
+	let activeKnowledge = null, knowledgeMode = 'edit', splitParts = [], nextSplitKey = 0, splitSelections = new Map();
+	function fitCardTextarea(area, minimum=260, reset=false) {
+		if(!area || !area.style)return;
+		// Collapsing a focused textarea on every input makes the browser lose its scroll position,
+		// especially while an IME is composing text. Reset only when loading another card.
+		if(reset || !area.style.height) {
+			area.style.height='auto';
+			area.style.height=Math.max(minimum,(area.scrollHeight||0)+2)+'px';
+			return;
+		}
+		let currentHeight=area.offsetHeight||parseFloat(area.style.height)||minimum;
+		let overflow=(area.scrollHeight||0)-(area.clientHeight||currentHeight);
+		if(overflow>0)area.style.height=currentHeight+overflow+2+'px';
+	}
+	function renderSplitCards() {
+		let modalBox=typeof $('knowledgeModal').querySelector==='function' ? $('knowledgeModal').querySelector('.modalBox') : null;
+		let previousScroll=modalBox?.scrollTop;
+		$('splitCards').innerHTML=splitParts.map((part,i)=>`<div class="splitCard"><strong>第 ${i+1} 张卡片</strong><div class="field"><label>卡片内容（可直接编辑，也可选中文字拆分）</label><textarea data-part-content="${i}" data-part-key="${part.key}">${esc(part.content)}</textarea></div><div class="field"><label>标题</label><input data-part-title="${i}" value="${esc(part.title)}"></div><button class="btn outline" data-extract-part="${i}">拆分第 ${i+1} 张卡片的选中文字</button></div>`).join('');
+		$('splitCards').querySelectorAll('[data-part-content]').forEach(area=>{
+			fitCardTextarea(area);
+			let key=Number(area.dataset.partKey),saved=splitSelections.get(key);
+			if(saved && typeof area.setSelectionRange==='function')area.setSelectionRange(saved.start,saved.end);
+			let remember=()=>splitSelections.set(key,{start:area.selectionStart,end:area.selectionEnd});
+			area.onselect=remember;area.onmouseup=remember;area.onkeyup=remember;
+			area.oninput=()=>{splitParts[Number(area.dataset.partContent)].content=area.value;splitSelections.delete(key);fitCardTextarea(area)};
+		});
+		$('splitCards').querySelectorAll('[data-part-title]').forEach(input=>input.oninput=()=>{splitParts[Number(input.dataset.partTitle)].title=input.value});
+		$('splitCards').querySelectorAll('[data-extract-part]').forEach(button=>button.onclick=()=>{
+			let i=Number(button.dataset.extractPart),area=$('splitCards').querySelector(`[data-part-content="${i}"]`);
+			let key=splitParts[i].key,saved=splitSelections.get(key);
+			let start=area.selectionStart,end=area.selectionEnd,content=splitParts[i].content;
+			if(start===end && saved){start=saved.start;end=saved.end}
+			if(start===end) return $('knowledgeStatus').textContent='请先在这张卡片的内容中选中要单独保留的文字。';
+			if(start===0 && end===content.length) return $('knowledgeStatus').textContent='已选中整张卡片，请只选其中需要单独成卡片的一部分。';
+			if(!content.slice(start,end).trim()) return $('knowledgeStatus').textContent='选中范围请包含实际文字。';
+			let chunks=[content.slice(0,start),content.slice(start,end),content.slice(end)].filter(chunk=>chunk.trim());
+			if(chunks.length<2) return $('knowledgeStatus').textContent='拆分后至少需要保留两张有内容的卡片。';
+			let title=splitParts[i].title;
+			splitSelections.delete(key);
+			splitParts.splice(i,1,...chunks.map(chunk=>({key:++nextSplitKey,content:chunk,title})));
+			renderSplitCards();
+			$('knowledgeStatus').textContent=`现在预览 ${splitParts.length} 张卡片；可以继续编辑文字、选中文字拆分，或修改标题。`;
+		});
+		if(modalBox && previousScroll!==undefined)modalBox.scrollTop=previousScroll;
+	}
+	function setKnowledgeMode(nextMode) {
+		knowledgeMode=nextMode;
+		$('knowledgeTitle').value=activeKnowledge.section||activeKnowledge.h2||'';
+		$('knowledgeEdited').value=activeKnowledge.content;
+		$('knowledgeEditField').classList.toggle('hidden',nextMode==='split');
+		$('splitPanel').classList.toggle('hidden',nextMode!=='split');
+		splitSelections.clear();
+		splitParts=[{key:++nextSplitKey,content:activeKnowledge.content,title:activeKnowledge.section||activeKnowledge.h2||''}];
+		if(nextMode==='split')renderSplitCards();
+		else fitCardTextarea($('knowledgeEdited'),260,true);
+		$('saveKnowledge').textContent=nextMode==='split'?'确认拆分':'保存修改';
+		$('editMode').classList.toggle('active',nextMode==='edit');
+		$('splitMode').classList.toggle('active',nextMode==='split');
+		$('knowledgeStatus').textContent=nextMode==='split'?'可以直接修改卡片文字，也可以选中部分文字，再点“拆分选中文字”。':'修改或补充后保存当前卡片。';
+	}
+	async function openKnowledge(id) {
+		activeKnowledge=knowledgeRows.find(k=>k.id===id);
+		if (!activeKnowledge) return alert('知识点已变化，请刷新页面');
+		if(activeView==='cards')overviewFocusId=id;
+		setKnowledgeMode('edit');
+		$('knowledgeModal').classList.remove('hidden');
+		fitCardTextarea($('knowledgeEdited'),260,true);
+		let modalBox=$('knowledgeModal').querySelector('.modalBox');
+		if(modalBox)modalBox.scrollTop=0;
+	}
+	$('knowledgeEdited').oninput=()=>fitCardTextarea($('knowledgeEdited'));
+	$('editMode').onclick=()=>{if(activeKnowledge)setKnowledgeMode('edit')};
+	$('splitMode').onclick=()=>{if(activeKnowledge)setKnowledgeMode('split')};
+	$('closeKnowledge').onclick=()=>{$('knowledgeModal').classList.add('hidden');activeKnowledge=null};
+	let activeGroupEditId=null;
+	function openGroupEditor(id) {
+		let card=all.find(item=>item.id===id&&item.merged_parts?.length>1);
+		if(!card)return alert('组合卡片已变化，请刷新知识总览后重试');
+		activeGroupEditId=id;
+		$('groupEditParts').innerHTML=card.merged_parts.map((part,i)=>{
+			let header='<strong>第 '+(i+1)+' 部分 · '+(part.kind==='image'?'图片':'文字')+'</strong>';
+			if(part.kind==='image')return '<section class="groupEditPart">'+header+'<div>'+esc(part.original||part.section||'图片')+'</div><img class="materialImage" src="'+mediaUrl(part)+'" alt="'+esc(part.original||'图片')+'"><div class="field"><label>图片注释</label><textarea data-group-annotation="'+i+'" maxlength="20000" placeholder="可留空">'+esc(part.annotation||'')+'</textarea></div></section>';
+			return '<section class="groupEditPart">'+header+'<div class="field"><label>标题</label><input data-group-title="'+i+'" maxlength="150" value="'+esc(part.section||part.h2||'')+'"></div><div class="field"><label>内容</label><textarea data-group-content="'+i+'">'+esc(part.original||'')+'</textarea></div></section>';
+		}).join('');
+		$('groupEditStatus').textContent='';
+		$('groupEditModal').classList.remove('hidden');
+		$('groupEditParts').querySelectorAll('textarea').forEach(area=>{fitCardTextarea(area,130,true);area.oninput=()=>fitCardTextarea(area,130)});
+		let box=$('groupEditModal').querySelector('.modalBox');
+		if(box)box.scrollTop=0;
+	}
+	$('closeGroupEdit').onclick=()=>{$('groupEditModal').classList.add('hidden');activeGroupEditId=null};
+	$('saveGroupEdit').onclick=async()=>{
+		if(!activeGroupEditId || $('saveGroupEdit').disabled)return;
+		let id=activeGroupEditId,card=all.find(item=>item.id===id&&item.merged_parts?.length>1);
+		if(!card)return $('groupEditStatus').textContent='组合卡片已变化，请刷新知识总览后重试';
+		let container=$('groupEditParts');
+		let parts=card.merged_parts.map((part,i)=>part.kind==='image'
+			? {id:part.id,annotation:container.querySelector('[data-group-annotation="'+i+'"]').value}
+			: {id:part.id,title:container.querySelector('[data-group-title="'+i+'"]').value,content:container.querySelector('[data-group-content="'+i+'"]').value});
+		let button=$('saveGroupEdit');
+		button.disabled=true;button.textContent='保存中…';
+		$('groupEditStatus').textContent='保存中…';
+		try {
+			await api('/api/cards/edit-group',{id,parts});
+			await syncCards();
+			let updated=all.find(item=>item.id===id);
+			if(updated){list=list.map(item=>item.id===id?updated:item);if(picked?.id===id)render()}
+			$('groupEditModal').classList.add('hidden');activeGroupEditId=null;
+			focusOverviewCard(id);
+		} catch(e) {$('groupEditStatus').textContent='保存失败：'+e.message}
+		finally {button.disabled=false;button.textContent='保存组合'}
+	};
+	let activeImageAnnotationId = null;
+	function openImageAnnotation(id) {
+		let card=all.find(c=>c.id===id&&c.kind==='image') || all.flatMap(c=>c.merged_parts||[]).find(c=>c.id===id&&c.kind==='image');
+		if(!card) return alert('图片卡片已变化，请刷新页面');
+		activeImageAnnotationId=id;
+		$('imageAnnotationText').value=card.annotation||'';
+		$('imageAnnotationStatus').textContent='留空保存可清除注释。';
+		$('imageAnnotationModal').classList.remove('hidden');
+		$('imageAnnotationText').focus();
+	}
+	$('closeImageAnnotation').onclick=()=>{$('imageAnnotationModal').classList.add('hidden');activeImageAnnotationId=null};
+	$('saveImageAnnotation').onclick=async()=>{
+		if(!activeImageAnnotationId)return;
+		try {
+			let result=await api('/api/image/annotation',{id:activeImageAnnotationId,annotation:$('imageAnnotationText').value});
+			let grouped=all.some(card=>card.merged_parts?.some(part=>part.id===activeImageAnnotationId));
+			if(grouped || !applyCardUpdate(result)) await syncCards();
+			else if (activeView==='cards') showList();
+			if(picked?.id===activeImageAnnotationId){picked=all.find(c=>c.id===activeImageAnnotationId)||picked;render()}
+			$('imageAnnotationModal').classList.add('hidden');
+			activeImageAnnotationId=null;
+		} catch(e) {$('imageAnnotationStatus').textContent='保存失败：'+e.message}
+	};
+	async function saveEditedKnowledge() {
+		if (!activeKnowledge) return false;
+		let saveButton=$('saveKnowledge');
+		if(saveButton.disabled)return false;
+		let saveLabel=saveButton.textContent;
+		saveButton.disabled=true;
+		saveButton.textContent='保存中…';
+		$('knowledgeStatus').textContent='保存中…';
+		try {
+			let result;
+			let currentId=activeKnowledge.id;
+			if (knowledgeMode==='split') {
+				if(splitParts.length<2) throw Error('请先选中一部分文字，拆出至少两张卡片');
+				result=await api('/api/knowledge-card/split',{id:activeKnowledge.id,original:activeKnowledge.content,parts:splitParts});
+				await syncCards();
+			} else {
+				result=await api('/api/knowledge-card/edit',{id:currentId,title:$('knowledgeTitle').value,content:$('knowledgeEdited').value});
+				let card=all.find(c=>c.id===currentId);
+				if(card) {
+					let updated={...card,original:result.content,section:result.title,sentence:result.content};
+					all[all.indexOf(card)]=updated;
+					list=list.map(c=>c.id===currentId?updated:c);
+					if(picked?.id===currentId)picked=updated;
+				}
+				let row=knowledgeRows.find(c=>c.id===currentId);
+				if(row){row.section=result.title;row.content=result.content;row.original=result.content}
+				if(activeView==='cards') {
+					let overviewRow=[...$('cardList').querySelectorAll('[data-card-id]')].find(x=>x.dataset.cardId===currentId);
+					if(overviewRow && !$('cardSearch').value.trim()) {
+						overviewRow.querySelector('small').innerHTML='知识点 · '+renderTitleHtml(result.title||row?.h2||'')+' · 第 '+(row?.line||'?')+' 行';
+						let preview=overviewRow.querySelector('.preview');
+						preview.innerHTML=renderCardContent(row||{kind:'knowledge',original:result.content},true);
+						typesetMath(preview);
+						overviewRow.classList.add('currentEdit');
+						updatePageNavigator();
+					} else showList();
+				}
+			}
+			if(knowledgeMode==='edit' && activeKnowledge.merged_parts) await syncCards();
+			if(activeView==='random'||activeView==='wrong'||activeView==='retry') {
+				let updated=all.find(c=>c.id===currentId), position=list.findIndex(c=>c.id===currentId);
+				if(position>=0 && updated) {
+					list[position]=updated;
+					let added=(result.new_ids||[]).map(id=>all.find(c=>c.id===id)).filter(c=>c&&matches(c));
+					if(added.length)list.splice(position+1,0,...added);
+					render();
+				}
+			}
+			$('knowledgeModal').classList.add('hidden');activeKnowledge=null;
+			focusOverviewCard(currentId);
+			return true;
+		} catch(e) {$('knowledgeStatus').textContent='保存失败：'+e.message;return false}
+		finally {saveButton.disabled=false;saveButton.textContent=saveLabel}
+	}
+	$('saveKnowledge').onclick=saveEditedKnowledge;
+	async function deleteKnowledgePoint(id) {
+		let item=knowledgeRows.find(k=>k.id===id);
+		if (!confirm(item?.merged_parts
+			? `确定删除这张组合卡片中的全部 ${item.merged_parts.length} 个内容及其学习记录吗？`
+			: '确定删除这条知识点卡片及学习记录吗？')) return;
+		let nextImage=item && all.filter(c=>c.kind==='image'&&c.note===item.note&&c.h2===item.h2&&c.line>=item.line)
+			.sort((a,b)=>a.line-b.line)[0];
+		try {
+			await api('/api/cards/delete-item',{id,kind:'knowledge'});
+			if(nextImage){
+				overviewFocusId=nextImage.id;
+				let q=searchText($('cardSearch').value);
+				if(!matchesSearch(q,[nextImage.note,chapterName(nextImage.note),nextImage.h2,nextImage.section,nextImage.original,nextImage.annotation,nextImage.media_path])) $('cardSearch').value='';
+			}
+			removeLocalCard(id);
+			showList();
+			if(nextImage)focusOverviewCard(nextImage.id);
+		}
+		catch(e) {alert(e.message)}
+	}
+	async function mergeKnowledgePoint(id, previousId) {
+		let previous=knowledgeRows.find(k=>k.id===previousId);
+		if(!previous || !confirm('将当前内容并入上一条知识点？\n\n上一条：'+previous.content.slice(0,90)+'\n\n两条的学习记录和标记会合并。'))return;
+		try {
+			await api('/api/knowledge-card/merge-previous',{id,previous_id:previousId});
+			overviewFocusId=previousId;
+			await syncCards();
+			focusOverviewCard(previousId);
+		} catch(e) {alert('合并失败：'+e.message)}
+	}
+	async function mergeImageIntoPrevious(id, previousId) {
+		let previous=all.find(card=>card.id===previousId);
+		if(!previous || !confirm('将这张图片（包含注释）并入上一张卡片？'))return;
+		try {
+			await api('/api/image/merge-previous',{id,previous_id:previousId});
+			overviewFocusId=previousId;
+			await syncCards();
+			focusOverviewCard(previousId);
+		} catch(e) {alert('合并失败：'+e.message)}
+	}
+	let savedNotes = [], importSelection = null, regenSelection = null;
+	async function chooseLocal(target) {
+		let result=await api('/api/local/choose-notes',{});
+		if (!result.files.length) {
+			$(target==='import'?'importFiles':'regenFiles').textContent=result.ignored ? '已忽略所选图片；请选择 Markdown 笔记。' : '未选择文件';
+			return;
+		}
+		let selected={source:'local',token:result.token,documents:result.documents};
+		let ignored=result.ignored ? `；已忽略 ${result.ignored} 个非 Markdown 文件` : '';
+		if (target==='import') {
+			importSelection=selected;
+			$('mdfiles').value='';
+			$('importFiles').textContent=result.files.join('、')+'；会自动读取同级 img 图片'+ignored+'。';
+		} else {
+			regenSelection=selected;
+			$('regenMdFiles').value='';
+			$('regenFiles').textContent=result.files.join('、')+'；已检索二级标题'+ignored+'。';
+			renderUploadTargets();
+		}
+	}
+	async function chooseBrowser(input,target) {
+		let files=[...input.files];
+		if (!files.length) return;
+		let ignored=files.filter(f=>!/\.(md|markdown)$/i.test(f.name)).length;
+		files=files.filter(f=>/\.(md|markdown)$/i.test(f.name));
+		if (!files.length) throw Error('所选文件中没有 Markdown 笔记');
+		let documents=[];
+		for (let file of files) {
+			let markdown=await file.text();
+			let info=await api('/api/notes/inspect',{markdown});
+			documents.push({name:file.name,markdown,sections:info.sections});
+		}
+		if (new Set(documents.map(d=>d.name.toLowerCase())).size!==documents.length) throw Error('所选笔记有同名文件');
+		let selected={source:'browser',documents};
+		if (target==='import') {
+			importSelection=selected;
+			$('importFiles').textContent=documents.map(d=>d.name).join('、')+(ignored?'；已忽略 '+ignored+' 个非 Markdown 文件':'')+'；需要自动读取同级图片时请使用“本地选择”。';
+		} else {
+			regenSelection=selected;
+			$('regenFiles').textContent=documents.map(d=>d.name).join('、')+'；已检索二级标题。';
+			renderUploadTargets();
+		}
+	}
+	$('pickImport').onclick=()=>chooseLocal('import').catch(e=>alert(e.message));
+	$('pickRegen').onclick=()=>chooseLocal('regen').catch(e=>alert(e.message));
+	$('mdfiles').onchange=()=>chooseBrowser($('mdfiles'),'import').catch(e=>{$('importFiles').textContent='选择失败：'+e.message});
+	$('regenMdFiles').onchange=()=>chooseBrowser($('regenMdFiles'),'regen').catch(e=>{$('regenFiles').textContent='选择失败：'+e.message});
+	function targetMarkup(prefix,notes,checkWhole=false) {
+		let byNote=new Map(), byTopic=new Map(), imagesByTopic=new Map();
+		let key=(note,title)=>JSON.stringify([note,title]);
+		for (let row of knowledgeRows) {
+			byNote.set(row.note,(byNote.get(row.note)||0)+1);
+			let topic=key(row.note,row.h2);
+			if (!byTopic.has(topic)) byTopic.set(topic,[]);
+			byTopic.get(topic).push(row);
+		}
+		for (let card of all) if (card.kind==='image') {
+			let topic=key(card.note,card.h2);
+			if (!imagesByTopic.has(topic)) imagesByTopic.set(topic,[]);
+			imagesByTopic.get(topic).push(card);
+		}
+		return notes.map(n=>'<details class="chapterGroup"><summary><input type="checkbox" class="target" data-group="'+prefix+'" data-note="'+esc(n.name)+'" data-scope="" '+(checkWhole?'checked':'')+'> '+esc(chapterName(n.name))+' <small>（'+(n.sections||[]).length+' 个二级标题 · '+(byNote.get(n.name)||0)+' 条知识点）</small></summary>'
+			+(n.sections||[]).map(s=>{let items=byTopic.get(key(n.name,s.title))||[],images=imagesByTopic.get(key(n.name,s.title))||[];return '<details class="topicGroup"><summary><input type="checkbox" class="target" data-group="'+prefix+'" data-note="'+esc(n.name)+'" data-scope="'+s.start+'" data-title="'+esc(s.title)+'" '+(checkWhole?'checked':'')+'> '+esc(s.title)+' <small>（'+items.length+' 条知识点 · '+images.length+' 张图片）</small></summary>'+(prefix==='delete'?items.map(k=>'<div class="row"><small>第 '+k.line+' 行</small><div class="preview">'+esc(k.content)+'</div></div>').join('')+images.map(c=>'<div class="row"><small>图片 · 第 '+c.line+' 行</small><img class="materialImage" loading="lazy" decoding="async" src="'+mediaUrl(c)+'" alt="'+esc(s.title)+'"></div>').join(''):'')+'</details>'}).join('')
+			+'</details>').join('') || '<p class="hint">暂无可选章节。</p>';
+	}
+	function wireTree(container) {
+		container.querySelectorAll('.chapterGroup').forEach(group=>{
+			let checks=[...group.querySelectorAll('input.target')],parent=checks[0],children=checks.slice(1);
+			if (!parent) return;
+			checks.forEach(c=>c.onclick=e=>e.stopPropagation());
+			parent.onchange=()=>{children.forEach(c=>c.checked=parent.checked);parent.indeterminate=false};
+			children.forEach(child=>child.onchange=()=>{
+				parent.checked=children.every(c=>c.checked);
+				parent.indeterminate=!parent.checked && children.some(c=>c.checked);
+			});
+		});
+	}
+	function targets(prefix) {
+		let entries=[...document.querySelectorAll('.target[data-group="'+prefix+'"]:checked')].map(x=>({note:x.dataset.note,...(x.dataset.scope ? {scope_start:Number(x.dataset.scope),scope_title:x.dataset.title} : {})}));
+		return entries.filter(x=>x.scope_start===undefined || !entries.some(y=>y.note===x.note && y.scope_start===undefined));
+	}
+	function renderUploadTargets() {
+		$('uploadTargets').innerHTML=targetMarkup('upload',regenSelection?.documents||[],true);
+		wireTree($('uploadTargets'));
+	}
+	function manualTitles() {
+		let note=savedNotes.find(n=>n.name===$('manualNote').value);
+		$('manualH2').innerHTML=(note?.sections||[]).filter(s=>s.start>0).map(s=>'<option value="'+esc(s.title)+'">'+esc(s.title)+'</option>').join('') || '<option value="">新建二级标题</option>';
+	}
+	async function updateNotes(data) {
+		data=data||await api('/api/notes');savedNotes=data.notes;
+		$('noteList').innerHTML=data.notes.length ? data.notes.map(n=>'<div class="row">'+esc(n.name)+' <small>'+esc(n.updated.slice(0,19))+' · '+(n.has_source?'有笔记原文':'仅保留卡片或空章节')+'</small></div>').join('') : '暂无';
+		$('deleteTargets').innerHTML=targetMarkup('delete',savedNotes);
+		$('regenTargets').innerHTML=targetMarkup('regen',savedNotes);
+		wireTree($('deleteTargets'));wireTree($('regenTargets'));
+		let previous=$('manualNote').value;
+		$('manualNote').innerHTML=savedNotes.filter(n=>/\.(md|markdown)$/i.test(n.name)).map(n=>'<option value="'+esc(n.name)+'">'+esc(chapterName(n.name))+'</option>').join('') || '<option value="">暂无章节</option>';
+		if (savedNotes.some(n=>n.name===previous)) $('manualNote').value=previous;
+		manualTitles();
+	}
+	$('manualNote').onchange=manualTitles;
+	let deletingTargets=false;
+	async function deleteSelected(mode) {
+		if (deletingTargets) return;
+		let chosen=targets('delete');
+		if (!chosen.length) return alert('请至少选择一个章节或二级标题');
+		let label={knowledge:'笔记原文（学习卡片保留）',questions:'学习卡片和记录（笔记原文保留）',both:'笔记原文、学习卡片及对应记录'}[mode];
+		if (!confirm('确定删除所选 '+chosen.length+' 个范围内的'+label+'吗？')) return;
+		deletingTargets=true;
+		for (let id of ['deleteKnowledge','deleteScope','deleteSource']) $(id).disabled=true;
+		$('deleteStatus').textContent='正在删除 '+chosen.length+' 个范围…';
+		let result;
+		try {
+			result=await api('/api/cards/delete-targets',{targets:chosen,mode});
+			$('deleteStatus').textContent='删除已完成，正在更新列表…';
+			let [,notesData]=await Promise.all([refresh(),api('/api/notes')]);
+			await updateNotes(notesData);
+			$('deleteStatus').textContent='已删除 '+result.deleted_knowledge+' 行笔记原文、'+result.deleted_cards+' 张学习卡片。列表已更新。';
+		} catch(e) {$('deleteStatus').textContent=(result?'删除已执行，但列表更新失败：':'删除失败：')+e.message}
+		finally {
+			deletingTargets=false;
+			for (let id of ['deleteKnowledge','deleteScope','deleteSource']) $(id).disabled=false;
+		}
+	}
+	$('deleteKnowledge').onclick=()=>deleteSelected('knowledge');
+	$('deleteScope').onclick=()=>deleteSelected('questions');
+	$('deleteSource').onclick=()=>deleteSelected('both');
+	$('selectAllDelete').onclick=()=>{
+		$('deleteTargets').querySelectorAll('input.target').forEach(box=>{box.checked=true;box.indeterminate=false});
+	};
+	$('clearDeleteSelection').onclick=()=>{
+		$('deleteTargets').querySelectorAll('input.target').forEach(box=>{box.checked=false;box.indeterminate=false});
+	};
+	async function awaitJob(job,progressId,statusId,prefix) {
+		if (!job.job_id) return job;
+		let started=Date.now();
+		while (true) {
+			let state=await api('/api/generate/status/'+job.job_id);
+			$(progressId).value=state.total_rows ? Math.round(state.processed_rows/state.total_rows*100) : 0;
+			$(statusId).textContent=prefix+'：'+(state.phase||'处理中')+'；已整理 '+state.processed_rows+'/'+state.total_rows+' 条知识点，完成 '+state.completed_batches+'/'+state.total_batches+' 批；耗时 '+Math.floor((Date.now()-started)/1000)+' 秒。';
+			if (state.done) {
+				if (state.error) throw Error(state.error);
+				return state.result;
+			}
+			await new Promise(resolve=>setTimeout(resolve,1000));
+		}
+	}
+	$('regenerate').onclick=async()=>{
+		if (!regenSelection) return alert('先上传 Markdown 文件');
+		let chosen=targets('upload');
+		if (!chosen.length) return alert('请选择整章或至少一个二级标题');
+		let action=document.querySelector('input[name="regenAction"]:checked')?.value||'replace';
+		if (action==='append') chosen=chosen.flatMap(t=>{
+			if (t.scope_title) return [t];
+			let doc=regenSelection.documents.find(d=>d.name===t.note);
+			return doc?.sections?.length ? [...new Set(doc.sections.map(s=>s.title))].map(scope_title=>({note:t.note,scope_title})) : [t];
+		});
+		let writeKnowledge=$('writeKnowledge').checked,writeQuestions=$('writeQuestions').checked;
+		if (!writeKnowledge&&!writeQuestions) return alert('至少选择保存知识点');
+		let model=$('smartSplit').checked ? $('model').value : '';
+		if ($('smartSplit').checked && !model) return alert('请选择本地模型，或取消“用本地 Ollama 优化切分”');
+		$('regenerate').disabled=true;$('regenProgress').classList.remove('hidden');
+		let results=[];
+		try {
+			for (let i=0;i<chosen.length;i++) {
+				let t=chosen[i],doc=regenSelection.documents.find(d=>d.name===t.note);
+				let payload={filename:t.note,model,scope_title:t.scope_title,action,write_knowledge:writeKnowledge,write_questions:writeQuestions};
+				let endpoint='/api/local/ingest/start';
+				if (regenSelection.source==='local') payload.token=regenSelection.token;
+				else {endpoint='/api/ingest/start';payload.markdown=doc.markdown}
+				let result=await awaitJob(await api(endpoint,payload),'regenProgress','regenStatus',t.note);
+				results.push(t.note+(t.scope_title?' / '+t.scope_title:'')+'：保存 '+result.saved+' 条知识点与图片'+(result.warnings?.length?'；图片：'+result.warnings.join('；'):''));
+				$('regenProgress').value=Math.round((i+1)/chosen.length*100);
+			}
+			await refresh();await updateNotes();
+			$('regenStatus').textContent='处理完成：\n'+results.join('\n');
+		} catch(e) {$('regenStatus').textContent='处理失败：'+e.message}
+		finally {$('regenerate').disabled=false}
+	};
+	$('regenerateSaved').onclick=async()=>{
+		let chosen=targets('regen'),model=$('smartSplit').checked ? $('model').value : '';
+		if (!chosen.length) return alert('至少选择一个已保存章节或二级标题');
+		if ($('smartSplit').checked && !model) return alert('请选择本地模型，或取消智能切分');
+		$('regenerateSaved').disabled=true;
+		try {
+			let messages=[];
+			for (let t of chosen) {
+				let result=await awaitJob(await api('/api/regenerate/start',{filename:t.note,model,...(t.scope_start ? {scope_start:t.scope_start}: {})}),'regenProgress','regenStatus',t.note);
+				messages.push(t.note+'：整理 '+result.saved+' 条知识点与图片');
+			}
+			await refresh();await updateNotes();$('regenStatus').textContent=messages.join('\n');
+		} catch(e) {$('regenStatus').textContent='重新生成失败：'+e.message}
+		finally {$('regenerateSaved').disabled=false}
+	};
+	$('manualImage').onchange=()=>{
+		let hasImage=!!$('manualImage').files[0];
+		$('manualTextLabel').textContent=hasImage?'图片注释（可留空）':'知识点文本';
+		$('manualText').placeholder=hasImage?'输入图片说明或易错点，可留空':'输入需要整理的知识点';
+		$('manualGenerate').textContent=hasImage?'添加图片卡片':'添加并处理文本';
+	};
+	$('manualGenerate').onclick=async()=>{
+		let note=$('manualNote').value,title=$('manualNewH2').value.trim()||$('manualH2').value,text=$('manualText').value.trim();
+		let imageFile=$('manualImage').files[0];
+		let randomQueueKnownIds=new Set(all.map(card=>card.id));
+		let writeKnowledge=$('manualWriteKnowledge').checked,writeQuestions=$('manualWriteQuestions').checked;
+		if (!note||!title||(!imageFile&&!text)) return alert('请选择章节和标题；纯文本知识点还需输入内容');
+		if (!imageFile&&!writeKnowledge&&!writeQuestions) return alert('至少选择保存知识点');
+		if (!imageFile&&$('smartSplit').checked && !$('model').value) return alert('请选择本地模型，或取消智能切分');
+		$('manualGenerate').disabled=true;
+		try {
+			if (imageFile) {
+				if (imageFile.size>8*1024*1024) throw Error('单张图片必须在 8 MB 以内');
+				let extension=imageFile.name.split('.').pop().toLowerCase();
+				let mime=extension==='svg'?'image/svg+xml':imageFile.type || ({png:'image/png',jpg:'image/jpeg',jpeg:'image/jpeg',gif:'image/gif',webp:'image/webp'})[extension];
+				if (!['image/png','image/jpeg','image/gif','image/webp','image/svg+xml'].includes(mime)) throw Error('仅支持 PNG、JPEG、GIF、WebP 或 SVG 图片');
+				let bytes=new Uint8Array(await imageFile.arrayBuffer()),binary='';
+				for(let i=0;i<bytes.length;i+=32768)binary+=String.fromCharCode(...bytes.subarray(i,i+32768));
+				await api('/api/manual/image',{note,title,filename:imageFile.name,mime,data:btoa(binary),annotation:text});
+				await refresh({randomQueueKnownIds});await updateNotes();
+				$('manualStatus').textContent=text?'已添加图片卡片，文字已保存为图片注释。':'已添加图片卡片。';
+				$('manualImage').value='';$('manualText').value='';$('manualImage').onchange();
+				return;
+			}
+			let markdown='# '+chapterName(note)+'\n## '+title+'\n'+text+'\n';
+			let result=await awaitJob(await api('/api/ingest/start',{filename:note,markdown,model:$('smartSplit').checked ? $('model').value : '',scope_title:title,action:'append',write_knowledge:writeKnowledge,write_questions:writeQuestions,analyze:false}),'regenProgress','manualStatus','手工文本');
+			await refresh({randomQueueKnownIds});await updateNotes();
+			$('manualStatus').textContent='已整理 '+result.saved+' 条知识点。';
+			$('manualText').value='';
+		} catch(e) {$('manualStatus').textContent='处理失败：'+e.message}
+		finally {$('manualGenerate').disabled=false}
+	};
+	
+	$('refreshModels').onclick = async () => {
+		try {
+			let r = await api('/api/models');
+			let available=r.models||[],previous=$('model').value;
+			$('model').innerHTML = available.map(m => `<option value="${esc(m)}">${esc(m)}</option>`).join('') || '<option value="">未安装模型</option>';
+			$('model').value=available.includes(r.default_model) ? r.default_model : (available.includes(previous) ? previous : (available.find(m=>!m.includes('-vl'))||available[0]||''));
+		} catch (e) {
+			$('model').innerHTML='<option value="">Ollama 未连接，可取消智能切分</option>'
+		}
+	};
+	$('refreshModels').onclick();
+	let watchingImport=false;
+	let lastImportReportPhase='';
+	const seenImportReports=new Set();
+	function importReportSeen(id) {
+		try {return window.localStorage?.getItem('import-report-seen:'+id)==='1' || seenImportReports.has(id)} catch(e) {return seenImportReports.has(id)}
+	}
+	function rememberImportReport(id) {
+		seenImportReports.add(id);
+		try {window.localStorage?.setItem('import-report-seen:'+id,'1')} catch(e) {}
+	}
+	function showImportQueue(state) {
+		let done=state.completed||[],pending=state.pending||[],total=done.length+pending.length;
+		$('resumeImport').classList.toggle('hidden',!pending.length||!state.error||state.outdated);
+		$('generate').disabled=!!pending.length&&!state.outdated;
+		if (!total) return false;
+		let report=$('importReport'),reportId=String(state.id||state.started||done.map(x=>x.name).join('|'));
+		let phase=reportId+':'+(pending.length?'pending':'completed');
+		if (phase!==lastImportReportPhase) {
+			report.open=pending.length>0 || !importReportSeen(reportId);
+			if (!pending.length) rememberImportReport(reportId);
+			lastImportReportPhase=phase;
+		}
+		$('importReportSummary').textContent=pending.length ? '导入进度：已完成 '+done.length+'/'+total+' 个文件' : '处理完成：'+done.length+' 个文件（点击查看记录）';
+		$('generateProgress').classList.remove('hidden');
+		let progress=state.progress||{},part=progress.total_rows ? progress.processed_rows/progress.total_rows : 0;
+		$('generateProgress').value=Math.round((done.length+(pending.length ? part : 0))/total*100);
+		let summary='已完成 '+done.length+'/'+total+' 个文件；待处理 '+pending.length+' 个。';
+		let current=pending.length ? '\n当前：'+pending[0]+'；已整理 '+(progress.processed_rows||0)+'/'+(progress.total_rows||0)+' 条知识点，完成 '+(progress.completed_batches||0)+'/'+(progress.total_batches||0)+' 批。' : '';
+		let retryTime=state.retry_at ? new Date(state.retry_at*1000).toLocaleTimeString() : '稍后';
+		$('generateStatus').textContent=state.outdated ? '旧导入队列使用之前的切分规则，已停止续跑。请重新选择全部 Markdown 文件并导入；开始新导入时会备份旧队列记录。' : state.error ? '导入暂时中断：'+state.error+'\n'+summary+'\n预计 '+retryTime+' 自动重试；也可点击“继续未完成的导入”立即重试。' : pending.length ? summary+current+(state.active?'':'\n正在等待自动继续。') : '处理完成：\n'+done.map(x=>x.name+'：'+(x.result.skipped?'笔记未变化':'整理 '+x.result.saved+' 条')+'；图片 '+(x.result.images||0)+' 张'+(x.result.warnings?.length?'；提示：'+x.result.warnings.map(w=>w.slice(0,120)).join('；'):'')).join('\n');
+		return pending.length>0&&!state.outdated;
+	}
+	async function watchImportQueue() {
+		if (watchingImport)return;
+		watchingImport=true;
+		let shownCompleted=-1;
+		try {
+			while (true) {
+				try {
+					let state=await api('/api/import-queue/status');
+					if ((state.completed?.length||0)>shownCompleted) {
+						let completed=state.completed?.length||0;
+						if (completed) {await refresh();await updateNotes()}
+						shownCompleted=completed;
+					}
+					if (!showImportQueue(state)) break;
+					await new Promise(resolve=>setTimeout(resolve,state.error?5000:1000));
+				} catch(e) {
+					$('importReport').open=true;
+					$('importReportSummary').textContent='导入进度暂时无法读取';
+					$('generateStatus').textContent='进度连接暂时中断：'+e.message+'。正在自动重新连接；导入任务会在服务器端继续。';
+					await new Promise(resolve=>setTimeout(resolve,5000));
+				}
+			}
+		} catch(e) {$('importReport').open=true;$('generateStatus').textContent='读取导入队列失败：'+e.message}
+		finally {watchingImport=false}
+	}
+	$('generate').onclick=async()=>{
+		if (!importSelection?.documents.length)return alert('请先选择 Markdown 笔记文件');
+		let model=$('smartSplit').checked ? $('model').value : '';
+		if ($('smartSplit').checked && !model) return alert('请选择本地模型，或取消智能切分');
+		$('generate').disabled=true;
+		try {
+			let request={files:importSelection.documents.map(x=>x.name),model,skip_unchanged:$('skipSame').checked};
+			if (importSelection.source==='local')request.token=importSelection.token;
+			else request.documents=importSelection.documents.map(x=>({name:x.name,markdown:x.markdown}));
+			showImportQueue(await api('/api/import-queue/start',request));
+			watchImportQueue();
+		} catch(e) {$('importReport').open=true;$('generateStatus').textContent='导入失败：'+e.message;$('generate').disabled=false}
+	};
+	$('resumeImport').onclick=async()=>{
+		try {showImportQueue(await api('/api/import-queue/retry',{}));watchImportQueue()}
+		catch(e) {$('importReport').open=true;$('generateStatus').textContent='继续导入失败：'+e.message}
+	};
+	watchImportQueue();
+	$('restoreBackup').onclick = async () => {
+		let f = $('backupFile').files[0];
+		if (!f) return alert('请选择 .sqlite3 备份文件');
+		$('restoreBackup').disabled = true;
+		$('importStatus').classList.remove('hidden');
+		try {
+			if (!/\.sqlite3$/i.test(f.name))throw Error('请选择 .sqlite3 备份文件');
+			if (!confirm('恢复备份会用文件中的笔记、卡片、图片和学习记录替换当前数据。系统会先保存当前数据库副本。确定继续吗？'))return;
+			$('importStatus').textContent = `正在恢复 ${f.name}…`;
+			let r = await api('/api/backup/import-sqlite', f);
+			$('importStatus').textContent = `恢复完成：${r.notes} 篇笔记、${r.cards} 张卡片、${r.media} 张图片、${r.attempts} 条答题记录。当前数据库副本：${r.previous_database}`;
+			await refresh();
+			await updateNotes()
+		} catch (e) {
+			$('importStatus').textContent = `导入失败：${e.message}`
+		} finally {
+			$('restoreBackup').disabled = false
+		}
+	};
+	let backupSaving=false;
+	async function saveHostBackup() {
+		if(backupSaving)return;
+		backupSaving=true;
+		$('export').disabled=true;
+		$('backupStatus').textContent='正在运行程序的电脑上保存备份…';
+		try {
+			let result=await api('/api/backup/save',{});
+			$('backupStatus').textContent='备份已保存到运行程序的电脑：'+result.path;
+		} catch(e) {$('backupStatus').textContent='备份失败：'+e.message}
+		finally {backupSaving=false;$('export').disabled=false}
+	}
+	$('export').onclick=saveHostBackup;
+	$('exportDb').onclick = () => {
+		$('backupStatus').textContent = '当前数据库位置：'+examDatabasePath+'；备份目录：'+examBackupDir+'。'
+	};
+	$('clear').onclick = async () => {
+		if (!confirm('确定清空全部学习记录、不理解标记和收藏吗？知识点卡片会保留。')) return;
+		await api('/api/clear', {});
+		await refresh()
+	};
+	refresh().then(updatePageNavigator).catch(e => {
+		$('prompt').textContent = '本地服务连接失败：' + e.message
+	});
+</script>
+</body>
+</html>

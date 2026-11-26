@@ -1,0 +1,6 @@
+{
+  "id": "ruankao",
+  "title": "软考知识记忆",
+  "notes_dir": "notes/软考笔记",
+  "database": "data/study.sqlite3"
+}

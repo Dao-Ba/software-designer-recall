@@ -1,0 +1,1015 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>软考记忆训练 · Markdown 知识点挖空</title>
+	<style>
+		:root {
+			color-scheme: light;
+			--bg: #f5f7fb;
+			--ink: #1c2940;
+			--muted: #718096;
+			--line: #e1e7f0;
+			--primary: #4657d5;
+			--good: #16845d;
+			--bad: #c84352;
+			--card: #fff
+		}
+		
+		* {
+			box-sizing: border-box
+		}
+		
+		body {
+			margin: 0;
+			font-family: system-ui, -apple-system, "Microsoft YaHei", sans-serif;
+			background: var(--bg);
+			color: var(--ink)
+		}
+		
+		.shell {
+			max-width: 1070px;
+			margin: auto;
+			padding: 28px 20px 80px
+		}
+		
+		.header {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 12px;
+			margin-bottom: 26px
+		}
+		
+		.logo {
+			font-size: 22px;
+			font-weight: 850;
+			letter-spacing: -.5px
+		}
+		
+		.sub {
+			color: var(--muted);
+			font-size: 13px;
+			margin-top: 6px
+		}
+		
+		.pill {
+			background: #e9eafa;
+			color: #4f57b4;
+			padding: 8px 13px;
+			border-radius: 100px;
+			font-size: 12px;
+			font-weight: 700
+		}
+		
+		.layout {
+			display: grid;
+			grid-template-columns:235px 1fr;
+			gap: 22px
+		}
+		
+		.panel, .main {
+			background: var(--card);
+			border: 1px solid var(--line);
+			border-radius: 18px;
+			box-shadow: 0 8px 30px #24315709
+		}
+		
+		.panel {
+			padding: 18px;
+			height: fit-content
+		}
+		
+		.panel h3 {
+			font-size: 12px;
+			color: var(--muted);
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			margin: 6px 0 12px
+		}
+		
+		.tab {
+			display: flex;
+			width: 100%;
+			gap: 9px;
+			align-items: center;
+			padding: 13px 12px;
+			border: 0;
+			border-radius: 10px;
+			background: transparent;
+			color: #49566b;
+			text-align: left;
+			font-size: 14px;
+			cursor: pointer;
+			margin: 3px 0
+		}
+		
+		.tab.active {
+			background: #edf0ff;
+			color: #394bd0;
+			font-weight: 750
+		}
+		
+		.tab .count {
+			margin-left: auto;
+			font-size: 12px;
+			color: inherit
+		}
+		
+		.sidefoot {
+			border-top: 1px solid var(--line);
+			margin-top: 18px;
+			padding-top: 18px
+		}
+		
+		.smallbtn {
+			border: 1px solid var(--line);
+			background: #fff;
+			border-radius: 9px;
+			padding: 9px 11px;
+			cursor: pointer;
+			color: #5c6474;
+			font-size: 12px;
+			margin: 3px 3px 3px 0
+		}
+		
+		.main {
+			padding: 26px 30px;
+			min-height: 550px
+		}
+		
+		.stats {
+			display: grid;
+			grid-template-columns:repeat(3, 1fr);
+			gap: 12px;
+			margin-bottom: 27px
+		}
+		
+		.stat {
+			background: #f6f8fc;
+			border-radius: 12px;
+			padding: 14px
+		}
+		
+		.stat strong {
+			font-size: 24px;
+			display: block
+		}
+		
+		.stat span {
+			font-size: 12px;
+			color: var(--muted)
+		}
+		
+		.topline {
+			display: flex;
+			justify-content: space-between;
+			gap: 12px;
+			align-items: center
+		}
+		
+		.eyebrow {
+			color: var(--primary);
+			font-weight: 800;
+			font-size: 12px;
+			letter-spacing: .3px
+		}
+		
+		.title {
+			font-weight: 820;
+			font-size: 23px;
+			line-height: 1.5;
+			margin: 9px 0 8px
+		}
+		
+		.meta {
+			font-size: 12px;
+			color: var(--muted)
+		}
+		
+		.progress {
+			height: 7px;
+			background: #e7eaf3;
+			border-radius: 12px;
+			overflow: hidden;
+			margin: 20px 0 28px
+		}
+		
+		.bar {
+			height: 100%;
+			background: var(--primary);
+			transition: width .3s
+		}
+		
+		.prompt {
+			border-radius: 13px;
+			background: #f7f8fc;
+			padding: 25px 22px;
+			font-size: 19px;
+			line-height: 2.0;
+			margin-bottom: 20px;
+			white-space: pre-wrap;
+			overflow-wrap: anywhere
+		}
+		
+		.blank {
+			display: inline;
+			border-radius: 7px;
+			padding: 5px 12px;
+			background: #e6eaff;
+			color: #384ac6;
+			font-weight: 750
+		}
+		
+		.blank.good {
+			background: #ddf4e9;
+			color: var(--good)
+		}
+		
+		.blank.bad {
+			background: #ffe9ea;
+			color: var(--bad)
+		}
+		
+		.options {
+			display: grid;
+			grid-template-columns:1fr 1fr;
+			gap: 12px
+		}
+		
+		.option {
+			min-height: 56px;
+			text-align: left;
+			padding: 13px 14px;
+			border: 1px solid var(--line);
+			background: #fff;
+			border-radius: 12px;
+			font-size: 15px;
+			color: var(--ink);
+			cursor: pointer;
+			line-height: 1.5
+		}
+		
+		.option:hover:not(:disabled) {
+			border-color: #8b96e8;
+			background: #f9faff
+		}
+		
+		.option:disabled {
+			cursor: default
+		}
+		
+		.option.correct {
+			border-color: #72c0a2;
+			background: #eaf9f0;
+			color: #176549
+		}
+		
+		.option.incorrect {
+			border-color: #e7a1a7;
+			background: #fff0f1;
+			color: #a51f35
+		}
+		
+		.letter {
+			display: inline-grid;
+			place-items: center;
+			width: 27px;
+			height: 27px;
+			margin-right: 8px;
+			background: #f1f3f7;
+			border-radius: 7px;
+			font-size: 12px;
+			font-weight: 750
+		}
+		
+		.feedback {
+			border-radius: 11px;
+			padding: 14px 16px;
+			margin-top: 17px;
+			background: #f6f8fc;
+			font-size: 14px;
+			line-height: 1.8
+		}
+		
+		.feedback.ok {
+			background: #edf9f2
+		}
+		
+		.feedback.no {
+			background: #fff4f4
+		}
+		
+		.bottom {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-top: 24px;
+			gap: 12px;
+			flex-wrap: wrap
+		}
+		
+		.btn {
+			border: 0;
+			background: var(--primary);
+			color: white;
+			padding: 12px 19px;
+			border-radius: 10px;
+			font-weight: 700;
+			cursor: pointer
+		}
+		
+		.btn:disabled {
+			opacity: .4;
+			cursor: not-allowed
+		}
+		
+		.btn.secondary {
+			background: #eef0fc;
+			color: #4553b8
+		}
+		
+		.filter {
+			display: flex;
+			gap: 8px;
+			align-items: center
+		}
+		
+		.filter select {
+			background: white;
+			border: 1px solid var(--line);
+			padding: 8px;
+			border-radius: 8px;
+			color: #4c5872;
+			max-width: 190px
+		}
+		
+		.hint {
+			font-size: 12px;
+			color: var(--muted)
+		}
+		
+		.empty {
+			padding: 60px 20px;
+			text-align: center;
+			color: #667086;
+			line-height: 1.8
+		}
+		
+		.studycontrols {
+			display: flex;
+			gap: 8px;
+			margin-top: 12px;
+			flex-wrap: wrap
+		}
+		
+		.rate {
+			border: 1px solid var(--line);
+			border-radius: 8px;
+			padding: 8px 12px;
+			background: white;
+			cursor: pointer
+		}
+		
+		.rate:hover {
+			border-color: var(--primary)
+		}
+		
+		.hidden {
+			display: none
+		}
+		
+		.footer {
+			font-size: 12px;
+			color: #8c95a5;
+			margin-top: 23px;
+			line-height: 1.8
+		}
+		
+		.listrow {
+			border-bottom: 1px solid var(--line);
+			padding: 15px 4px;
+			font-size: 14px;
+			line-height: 1.7
+		}
+		
+		.listrow:last-child {
+			border: 0
+		}
+		
+		.tag {
+			display: inline-block;
+			border-radius: 5px;
+			padding: 2px 8px;
+			background: #edf0ff;
+			color: #4d5ac9;
+			font-size: 11px;
+			margin-left: 8px
+		}
+		
+		.rowactions {
+			float: right
+		}
+		
+		.rowactions button {
+			border: 0;
+			background: #edf0ff;
+			border-radius: 7px;
+			padding: 5px 9px;
+			cursor: pointer;
+			color: #4d5ac9
+		}
+		
+		.toggle {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			font-size: 12px;
+			color: #687589
+		}
+		
+		.toggle input {
+			accent-color: var(--primary)
+		}
+		
+		@media (max-width: 760px) {
+			.layout {
+				grid-template-columns:1fr
+			}
+			
+			.panel {
+				display: flex;
+				gap: 5px;
+				align-items: center;
+				flex-wrap: wrap
+			}
+			
+			.panel h3, .sidefoot {
+				display: none
+			}
+			
+			.tab {
+				width: auto;
+				padding: 10px;
+				font-size: 13px
+			}
+			
+			.main {
+				padding: 20px
+			}
+			
+			.stats {
+				gap: 7px
+			}
+			
+			.stat {
+				padding: 11px
+			}
+			
+			.stat strong {
+				font-size: 20px
+			}
+			
+			.prompt {
+				font-size: 17px;
+				padding: 18px 15px
+			}
+			
+			.options {
+				grid-template-columns:1fr
+			}
+		}
+	</style>
+</head>
+<body>
+<div class="shell">
+	<div class="header">
+		<div>
+			<div class="logo">知点 · 软考记忆训练</div>
+			<div class="sub">从你的 Typora 笔记中随机抽查关键知识点</div>
+		</div>
+		<div class="pill">本地离线版 · 支持导入笔记</div>
+	</div>
+	<div class="layout">
+		<aside class="panel"><h3>学习模式</h3>
+			<button class="tab active" data-mode="random">✦ 随机抽查 <span class="count" id="totalBadge"></span>
+			</button>
+			<button class="tab" data-mode="due">◷ 今日复习 <span class="count" id="dueBadge"></span></button>
+			<button class="tab" data-mode="wrong">↻ 错题重练 <span class="count" id="wrongBadge"></span></button>
+			<button class="tab" data-mode="all">▤ 知识点总览</button>
+			<div class="sidefoot"><h3>导入学习资料</h3>
+				<button class="smallbtn" id="mdBtn">规则导入 Markdown</button>
+				<button class="smallbtn" id="aiBtn">Ollama 智能挖空</button>
+				<input type="file" id="aiFile" accept=".md,text/markdown,text/plain" multiple hidden>
+				<div id="aiStatus" class="hint" aria-live="polite">使用本地服务时可调用 Ollama，不用云端 API。</div>
+				<input type="file" id="mdFile" accept=".md,text/markdown,text/plain" multiple hidden>
+				<button class="smallbtn" id="bankBtn">导入 JSON 题库</button>
+				<input type="file" id="bankFile" accept=".json,application/json" hidden>
+				<button class="smallbtn" id="bankExport">导出当前题库</button>
+				<button class="smallbtn" id="sampleRestore">恢复示例题库</button>
+				<p class="hint">Markdown 在浏览器中使用本地规则提取初稿；更精准的语义挖空请使用 AI Skill 审核
+					JSON。导入新题库后，旧题的记忆记录保留。</p>
+				<h3>学习记录</h3>
+				<button class="smallbtn" id="export">导出记录</button>
+				<button class="smallbtn" id="importBtn">导入记录</button>
+				<input type="file" id="import" accept="application/json" hidden>
+				<button class="smallbtn" id="reset">重置记录</button>
+				<p class="hint">记录保存在当前浏览器，清理浏览器数据可能丢失，建议定期导出。</p></div>
+		</aside>
+		<main class="main">
+			<div class="stats">
+				<div class="stat"><strong id="studied">0</strong><span>已练习知识点</span></div>
+				<div class="stat"><strong id="wrongCount">0</strong><span>待巩固错题</span></div>
+				<div class="stat"><strong id="dueCount">0</strong><span>待复习知识点</span></div>
+			</div>
+			<div id="quiz">
+				<div class="topline"><span class="eyebrow" id="category"></span><span class="meta" id="fraction"></span>
+				</div>
+				<div class="title" id="heading"></div>
+				<div class="meta" id="source"></div>
+				<div class="progress">
+					<div class="bar" id="bar"></div>
+				</div>
+				<div class="prompt" id="prompt"></div>
+				<div class="options" id="options"></div>
+				<div class="feedback hidden" id="feedback"></div>
+				<div class="studycontrols hidden" id="studycontrols"><span
+						class="hint">回忆程度（用于安排下一次复习）：</span>
+					<button class="rate" data-score="0">忘记了</button>
+					<button class="rate" data-score="1">困难</button>
+					<button class="rate" data-score="2">记住了</button>
+					<button class="rate" data-score="3">很简单</button>
+				</div>
+				<div class="bottom">
+					<div class="filter"><label class="hint" for="section">章节</label><select id="section">
+						<option value="all">全部章节</option>
+					</select></div>
+					<div>
+						<button class="btn secondary" id="shuffle">重新随机</button>
+						<button class="btn" id="next">跳过 / 下一条 →</button>
+					</div>
+				</div>
+			</div>
+			<div id="listing" class="hidden"></div>
+			<div class="footer">本地网页支持导入 Markdown 和经 AI Skill 处理的 JSON 题库。规则提取的答案和干扰项需要人工核查；间隔复习使用简化算法，并非
+				FSRS。
+			</div>
+		</main>
+	</div>
+</div>
+<script>
+	const raw = [
+		['CPU的功能', '程序控制', 'CPU的【程序控制】功能，是通过执行指令来控制程序的执行顺序。', ['程序控制', '时间控制', '数据处理', '操作控制']],
+		['CPU的功能', '操作控制', 'CPU 的【操作控制】功能负责产生每条指令的操作信号，并送往对应部件。', ['操作控制', '程序控制', '时间控制', '数据处理']],
+		['CPU的功能', '时间控制', 'CPU 对操作信号的出现时间、持续时间及先后顺序进行严格控制，属于【时间控制】。', ['时间控制', '操作控制', '程序控制', '数据处理']],
+		['CPU的功能', '数据处理', 'CPU 对数据进行算术运算和逻辑运算，属于【数据处理】。', ['数据处理', '时间控制', '操作控制', '程序控制']],
+		['CPU的组成', '运算器', '【运算器】是数据加工处理部件，用于完成计算机的各种算术和逻辑运算。', ['运算器', '控制器', '寄存器组', '指令译码器']],
+		['CPU的组成', '控制器', '【控制器】负责控制整个 CPU 的工作，保证程序正确执行并处理异常事件。', ['控制器', '运算器', '累加寄存器', '数据缓冲寄存器']],
+		['CPU的组成', '算术逻辑单元(ALU)', '【算术逻辑单元(ALU)】负责处理数据，实现算术运算和逻辑运算。', ['算术逻辑单元(ALU)', '累加寄存器(AC)', '状态条件寄存器(PSW)', '程序计数器(PC)']],
+		['CPU的组成', '累加寄存器(AC)', '【累加寄存器(AC)】暂存算术运算或逻辑运算的中间运算结果。', ['累加寄存器(AC)', '数据缓冲寄存器(DR)', '指令寄存器(IR)', '地址寄存器(AR)']],
+		['CPU的组成', '数据缓冲寄存器(DR)', '【数据缓冲寄存器(DR)】暂存指令或数据字或操作数。', ['数据缓冲寄存器(DR)', '程序计数器(PC)', '状态条件寄存器(PSW)', '指令译码器(ID)']],
+		['CPU的组成', '状态条件寄存器(PSW)', '【状态条件寄存器(PSW)】保存指令执行后的状态。', ['状态条件寄存器(PSW)', '数据缓冲寄存器(DR)', '程序计数器(PC)', '算术逻辑单元(ALU)']],
+		['CPU的组成', '指令寄存器(IR)', '【指令寄存器(IR)】用于存放当前正在执行的指令。', ['指令寄存器(IR)', '程序计数器(PC)', '地址寄存器(AR)', '数据缓冲寄存器(DR)']],
+		['CPU的组成', '程序计数器(PC)', '【程序计数器(PC)】存放的是指令的地址，还有计数的功能。', ['程序计数器(PC)', '指令寄存器(IR)', '状态条件寄存器(PSW)', '算术逻辑单元(ALU)']],
+		['CPU的组成', '地址寄存器(AR)', '【地址寄存器(AR)】存放的是 CPU 访问内存单元的地址。', ['地址寄存器(AR)', '数据缓冲寄存器(DR)', '指令寄存器(IR)', '累加寄存器(AC)']],
+		['CPU的组成', '指令译码器(ID)', '【指令译码器(ID)】负责把操作码解析成对应的指令操作。', ['指令译码器(ID)', '程序计数器(PC)', '算术逻辑单元(ALU)', '状态条件寄存器(PSW)']],
+		['CPU的组成', '透明的', '笔记中：指令寄存器 IR 对程序员是【透明的】、不可见的。', ['透明的', '可见的', '可访问的', '可读写的']],
+		['CPU的组成', '可见的', '笔记中：程序计数器 PC 对程序员是【可见的】、可访问的。', ['可见的', '透明的', '不可见的', '不可寻址的']],
+		['CPU的组成', '指令控制逻辑', '【指令控制逻辑】完成取指令、分析指令和执行指令的操作。', ['指令控制逻辑', '时序控制逻辑', '总线控制逻辑', '中断控制逻辑']],
+		['CPU的组成', '时序控制逻辑', '【时序控制逻辑】为每条指令按时间顺序提供应有的控制信号。', ['时序控制逻辑', '指令控制逻辑', '中断控制逻辑', '总线控制逻辑']],
+		['CPU的组成', '总线控制逻辑', '【总线控制逻辑】是为多个功能部件服务的信息通路的控制电路。', ['总线控制逻辑', '时序控制逻辑', '中断控制逻辑', '指令控制逻辑']],
+		['CPU的组成', '中断控制逻辑', '【中断控制逻辑】控制各种中断请求，并按优先级排序交给 CPU。', ['中断控制逻辑', '总线控制逻辑', '指令控制逻辑', '时序控制逻辑']],
+		['CPU 对待 I/O 设备的方式', '统一编址', '【统一编址】将 I/O 接口寄存器和主存单元放在同一个地址空间中。', ['统一编址', '独立编址', '虚拟编址', '分页编址']],
+		['CPU 对待 I/O 设备的方式', '访存指令', '统一编址下，CPU 使用【访存指令】访问 I/O 设备。', ['访存指令', '输入输出指令', '转移指令', '中断返回指令']],
+		['CPU 对待 I/O 设备的方式', '独立编址', '【独立编址】要求 CPU 使用专门的输入输出指令与 I/O 设备通信。', ['独立编址', '统一编址', '虚拟编址', '分页编址']],
+		['CPU 对待 I/O 设备的方式', '输入输出指令', '独立编址下，CPU 使用专门的【输入输出指令】与 I/O 设备通信。', ['输入输出指令', '访存指令', '逻辑运算指令', '移位指令']],
+		['补充', '指令周期阶段', 'CPU 在执行程序时，依据当前所处的【指令周期阶段】来判断从内存中取出的内容是指令还是数据。', ['指令周期阶段', '内存地址高低', '总线宽度', '数据长度']],
+		['补充', '程序计数器（PC）', '在执行指令周期时，下一条将要执行的指令地址由【程序计数器（PC）】保存。', ['程序计数器（PC）', '指令寄存器（IR）', '状态条件寄存器（PSW）', '算术逻辑单元（ALU）']],
+		['补充', '地址总线', '取指时，CPU 将 PC 中的地址内容发送到【地址总线】上，以定位相应内存单元。', ['地址总线', '数据总线', '控制总线', '内部总线']],
+		['补充', '数据总线', '内存控制器将相应地址处的指令数据通过【数据总线】传回 CPU。', ['数据总线', '地址总线', '控制总线', '外部总线']],
+		['补充', 'PCI总线', '【PCI总线】属于并行内总线，常用于连接计算机内部的外围设备。', ['PCI总线', 'SCSI总线', 'USB总线', '串行通信总线']],
+		['补充', 'SCSI总线', '【SCSI总线】在这份笔记中归为并行外总线，用于连接外部存储设备。', ['SCSI总线', 'PCI总线', 'ISA总线', 'EISA总线']],
+		['补充', 'ISA总线', '【ISA总线】是早期 PC 机广泛使用的系统总线标准，为扩展卡提供连接接口。', ['ISA总线', 'EISA总线', 'PCIe总线', 'SCSI总线']],
+		['补充', 'EISA总线', '【EISA总线】是 ISA 总线的扩展版本，具有更宽的数据路径并兼容 ISA 设备。', ['EISA总线', 'SCSI总线', 'PCI总线', 'USB总线']],
+		['补充', '指令周期', '【指令周期】是 CPU 从主存中取出并执行一条完整指令所需的全部时间。', ['指令周期', '机器周期', '时钟周期', '总线周期']],
+		['补充', '机器周期', '【机器周期】是完成一个基本操作所需的时间。', ['机器周期', '指令周期', '进程周期', '中断响应时间']],
+		['补充', '内部总线', '【内部总线】位于 CPU 内部，连接各个寄存器、运算器及控制器等部件。', ['内部总线', '系统总线', '外部总线', '通信总线']],
+		['补充', '系统总线', '【系统总线】是计算机各部件间信息传输的公共通道，连接 CPU、主存和 I/O 接口等。', ['系统总线', '内部总线', '外部总线', 'SCSI总线']],
+		['补充', '外部总线（或通信总线）', '【外部总线（或通信总线）】用于计算机系统之间或与外部设备之间的通信。', ['外部总线（或通信总线）', '内部总线', '系统总线', '数据总线']]
+	];
+	const demoCards = raw.map((r, i) => ({
+		id: 'cpu-' + String(i + 1).padStart(3, '0'),
+		section: r[0],
+		answer: r[1],
+		sentence: r[2],
+		options: r[3]
+	}));
+	const STORAGE = 'soft-exam-cloze-notes-v1', BANKKEY = 'soft-exam-cloze-bank-v2';
+	let cards = demoCards;
+	try {
+		const c = JSON.parse(localStorage.getItem(BANKKEY) || 'null');
+		if (Array.isArray(c) && c.length) cards = c
+	} catch (e) {
+	}
+	;let records = {};
+	try {
+		records = JSON.parse(localStorage.getItem(STORAGE) || '{}')
+	} catch (e) {
+	}
+	;
+	let mode = 'random', queue = [], index = 0, chosen = null, rated = false;
+	const $ = id => document.getElementById(id), now = () => Date.now(), DAY = 86400000, stat = id => records[id] || {};
+	
+	function save() {
+		try {
+			localStorage.setItem(STORAGE, JSON.stringify(records))
+		} catch (e) {
+			alert("浏览器无法保存数据，请及时导出备份")
+		}
+		;renderStats()
+	}
+	
+	function shuffle(arr) {
+		let a = [...arr];
+		for (let i = a.length - 1; i > 0; i--) {
+			let j = Math.floor(Math.random() * (i + 1));
+			[a[i], a[j]] = [a[j], a[i]]
+		}
+		return a
+	}
+	
+	function renderStats() {
+		let practiced = cards.filter(c => stat(c.id).attempts > 0).length,
+				wrong = cards.filter(c => stat(c.id).wrong > 0).length,
+				due = cards.filter(c => !stat(c.id).next || stat(c.id).next <= now()).length;
+		$('studied').textContent = practiced;
+		$('wrongCount').textContent = wrong;
+		$('dueCount').textContent = due;
+		$('totalBadge').textContent = cards.length;
+		$('wrongBadge').textContent = wrong;
+		$('dueBadge').textContent = due
+	}
+	
+	function filtered() {
+		const sec = $('section').value;
+		return cards.filter(c => (sec === 'all' || c.section === sec) && (mode === 'random' || mode === 'all' || mode === 'wrong' && stat(c.id).wrong > 0 || mode === 'due' && (!stat(c.id).next || stat(c.id).next <= now())))
+	}
+	
+	function start() {
+		queue = shuffle(filtered());
+		index = 0;
+		chosen = null;
+		rated = false;
+		render()
+	}
+	
+	function escapeHtml(s) {
+		return String(s).replace(/[&<>"']/g, c => ({
+			'&': '&amp;',
+			'<': '&lt;',
+			'>': '&gt;',
+			'"': '&quot;',
+			"'": '&#39;'
+		}[c]))
+	}
+	
+	function render() {
+		renderStats();
+		const isList = mode === 'all';
+		$('quiz').classList.toggle('hidden', isList);
+		$('listing').classList.toggle('hidden', !isList);
+		if (isList) {
+			$('listing').innerHTML = '<h2>知识点总览</h2><p class="meta">展示已整理的全部知识点，可按章节查看。</p>' + filtered().map(c => `<div class="listrow"><strong>${escapeHtml(c.answer)}</strong><span class="tag">${escapeHtml(c.section)}</span><div class="meta">${escapeHtml(c.sentence.replace('【', '').replace('】', ''))}</div></div>`).join('');
+			return
+		}
+		const c = queue[index];
+		if (!c) {
+			$('category').textContent = '当前模式';
+			$('heading').textContent = '本轮已完成';
+			$('source').textContent = '';
+			$('bar').style.width = '100%';
+			$('prompt').innerHTML = '<div class="empty">没有更多待练习知识点。可以切换模式或重新随机。</div>';
+			$('options').innerHTML = '';
+			$('feedback').classList.add('hidden');
+			$('studycontrols').classList.add('hidden');
+			$('fraction').textContent = '';
+			return
+		}
+		$('category').textContent = mode === 'due' ? '到期复习' : mode === 'wrong' ? '错题强化' : '知识点挖空';
+		$('heading').textContent = c.section;
+		$('source').textContent = '笔记原文 · ' + c.section;
+		$('fraction').textContent = `${index + 1} / ${queue.length}`;
+		$('bar').style.width = (100 * (index + 1) / queue.length) + '%';
+		let content = c.sentence.split(/[【】]/);
+		$('prompt').innerHTML = escapeHtml(content[0]) + `<span class="blank ${chosen === null ? '' : chosen === c.answer ? 'good' : 'bad'}">${chosen === null ? '______' : escapeHtml(c.answer)}</span>` + escapeHtml(content[2] || '');
+		const o = shuffle(c.options);
+		$('options').innerHTML = o.map((x, i) => `<button class="option ${chosen !== null && x === c.answer ? 'correct' : chosen === x ? 'incorrect' : ''}" data-value="${escapeHtml(x)}" ${chosen !== null ? 'disabled' : ''}><span class="letter">${'ABCD'[i]}</span>${escapeHtml(x)}</button>`).join('');
+		$('options').querySelectorAll('button').forEach(b => b.onclick = () => choose(c, b.dataset.value));
+		$('feedback').classList.toggle('hidden', chosen === null);
+		$('studycontrols').classList.toggle('hidden', chosen === null || rated);
+		if (chosen !== null) {
+			const right = chosen === c.answer;
+			$('feedback').className = 'feedback ' + (right ? 'ok' : 'no');
+			$('feedback').innerHTML = `<strong>${right ? '✓ 回答正确' : '✗ 回答错误'}</strong><div>正确答案：${escapeHtml(c.answer)}</div><div class="meta">已展示原文中的完整知识点。请选择记忆程度，安排后续复习。</div>`
+		}
+	}
+	
+	function choose(c, val) {
+		if (chosen !== null) return;
+		chosen = val;
+		const old = stat(c.id), correct = val === c.answer;
+		records[c.id] = {
+			...old,
+			attempts: (old.attempts || 0) + 1,
+			wrong: correct ? (old.wrong || 0) : ((old.wrong || 0) + 1),
+			last: now(),
+			lastCorrect: correct
+		};
+		save();
+		render()
+	}
+	
+	function rate(score) {
+		if (chosen === null || rated || !queue[index]) return;
+		const c = queue[index], r = stat(c.id);
+		let interval = r.interval || 0, streak = r.streak || 0;
+		if (score === 0) {
+			interval = 0;
+			streak = 0
+		} else if (score === 1) {
+			interval = 1;
+			streak = 0
+		} else if (score === 2) {
+			streak++;
+			interval = streak === 1 ? 1 : streak === 2 ? 3 : Math.max(4, Math.round(interval * 2))
+		} else {
+			streak++;
+			interval = streak === 1 ? 3 : Math.max(5, Math.round(interval * 2.8))
+		}
+		records[c.id] = {
+			...r,
+			interval,
+			streak,
+			next: now() + (score === 0 ? 10 / 1440 : interval) * DAY,
+			wrong: score >= 2 ? 0 : r.wrong || 0
+		};
+		rated = true;
+		save();
+		render();
+		$('feedback').innerHTML += `<div class="meta">已安排：${score === 0 ? '约 10 分钟后' : interval + ' 天后'}复习。</div>`
+	}
+	
+	function next() {
+		index++;
+		chosen = null;
+		rated = false;
+		render()
+	}
+	
+	document.querySelectorAll('.tab').forEach(b => b.onclick = () => {
+		document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+		b.classList.add('active');
+		mode = b.dataset.mode;
+		start()
+	});
+	document.querySelectorAll('[data-score]').forEach(b => b.onclick = () => rate(Number(b.dataset.score)));
+	$('next').onclick = next;
+	$('shuffle').onclick = start;
+	$('section').onchange = start;
+	$('export').onclick = () => {
+		const blob = new Blob([JSON.stringify({
+			version: 1,
+			exported: new Date().toISOString(),
+			records
+		}, null, 2)], {type: 'application/json'});
+		const a = document.createElement('a');
+		a.href = URL.createObjectURL(blob);
+		a.download = '软考学习记录.json';
+		a.click();
+		URL.revokeObjectURL(a.href)
+	};
+	$('importBtn').onclick = () => $('import').click();
+	$('import').onchange = async e => {
+		const f = e.target.files[0];
+		if (!f) return;
+		try {
+			const x = JSON.parse(await f.text());
+			if (!x.records || typeof x.records !== 'object') throw Error();
+			records = x.records;
+			save();
+			start();
+			alert('记录已导入')
+		} catch (e) {
+			alert('不是有效的学习记录文件')
+		}
+	};
+	$('reset').onclick = () => {
+		if (confirm('清空全部学习、错题与复习记录？')) {
+			records = {};
+			save();
+			start()
+		}
+	};
+	
+	function refreshSections() {
+		const sel = $('section');
+		sel.innerHTML = '<option value="all">全部章节</option>';
+		for (const s of [...new Set(cards.map(c => c.section))]) {
+			const op = document.createElement('option');
+			op.value = s;
+			op.textContent = s;
+			sel.appendChild(op)
+		}
+	}
+	
+	function validateCards(input) {
+		if (!Array.isArray(input)) throw Error('cards 必须是数组');
+		const valid = [];
+		let ids = new Set();
+		for (const c of input) {
+			if (!c || typeof c.id !== 'string' || typeof c.section !== 'string' || typeof c.answer !== 'string' || typeof c.sentence !== 'string' || !Array.isArray(c.options)) continue;
+			if (c.sentence.split('【').length !== 2 || c.sentence.split('】').length !== 2 || !c.sentence.includes('【' + c.answer + '】')) continue;
+			if (c.options.length !== 4 || new Set(c.options).size !== 4 || !c.options.includes(c.answer) || ids.has(c.id)) continue;
+			ids.add(c.id);
+			valid.push(c)
+		}
+		if (!valid.length) throw Error('没有有效卡片：检查字段、四选项与【答案】标记');
+		return valid
+	}
+	
+	function installBank(bank) {
+		cards = validateCards(bank);
+		try {
+			localStorage.setItem(BANKKEY, JSON.stringify(cards))
+		} catch (e) {
+			alert('题库过大，无法持久保存。请改用较小题库，并保存 JSON 文件备份。')
+		}
+		refreshSections();
+		mode = 'random';
+		document.querySelectorAll('.tab').forEach(x => x.classList.toggle('active', x.dataset.mode === 'random'));
+		start();
+		alert(`成功导入 ${cards.length} 张知识点卡片，历史学习记录未清空。`)
+	}
+	
+	function download(name, obj) {
+		const blob = new Blob([JSON.stringify(obj, null, 2)], {type: 'application/json'}),
+				a = document.createElement('a');
+		a.href = URL.createObjectURL(blob);
+		a.download = name;
+		a.click();
+		setTimeout(() => URL.revokeObjectURL(a.href), 1000)
+	}
+	
+	$('bankExport').onclick = () => download('软考挖空题库.json', {version: 2, cards});
+	$('bankBtn').onclick = () => $('bankFile').click();
+	$('bankFile').onchange = async e => {
+		const f = e.target.files[0];
+		if (!f) return;
+		try {
+			const obj = JSON.parse(await f.text());
+			installBank(obj.cards || obj)
+		} catch (err) {
+			alert('导入失败：' + err.message)
+		}
+		e.target.value = ''
+	};
+	$('sampleRestore').onclick = () => {
+		if (confirm('切换回最初示例题库？历史记录会保留。')) {
+			cards = demoCards;
+			localStorage.removeItem(BANKKEY);
+			refreshSections();
+			start()
+		}
+	};
+	
+	function cleanMd(s) {
+		return s.replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCodePoint(parseInt(h, 16))).replace(/!\[[^\]]*\]\([^)]*\)/g, '').replace(/\[([^\]]+)\]\([^)]*\)/g, '$1').replace(/<[^>]+>/g, '').replace(/\*\*|==|`|__/g, '').replace(/\s+/g, ' ').trim()
+	}
+	
+	function parseMarkdown(md, filename) {
+		let section = filename, code = false, found = [];
+		const lines = md.split(/\r?\n/);
+		lines.forEach((line, n) => {
+			let s = line.trim();
+			if (/^(```|~~~)/.test(s)) {
+				code = !code;
+				return
+			}
+			if (code || !s || /^!\[/.test(s)) return;
+			const h = s.match(/^#{1,6}\s+(.+)/);
+			if (h) {
+				section = cleanMd(h[1]);
+				return
+			}
+			s = s.replace(/^>\s*/, '').replace(/^(?:[-*+]\s+|\d+[.)]\s+)/, '');
+			if (s.startsWith('|') && s.endsWith('|')) {
+				const cells = s.slice(1, -1).split('|').map(x => x.trim());
+				if (cells.length < 2 || /^[:-]+$/.test(cells[0])) return;
+				s = cells[0] + '：' + cells[1]
+			}
+			const body = cleanMd(s);
+			if (body.length < 14 || body.length > 310) return;
+			const candidates = [];
+			const pair = body.match(/^(.{2,35}?)\s*[：:]\s*.{5,}/);
+			if (pair) candidates.push(pair[1].trim());
+			for (const p of [/\*\*(.+?)\*\*/g, /==(.+?)==/g, /`([^`]+)`/g]) {
+				for (const m of s.matchAll(p)) candidates.push(cleanMd(m[1]))
+			}
+			const answer = candidates.find(x => x.length >= 2 && x.length <= 26 && body.includes(x));
+			if (!answer) return;
+			const at = body.indexOf(answer);
+			const sentence = body.slice(0, at) + '【' + answer + '】' + body.slice(at + answer.length);
+			const id = 'md-' + hashID(filename + '|' + section + '|' + body + '|' + answer);
+			found.push({id, section, answer, sentence, source: filename, line: n + 1, needs_review: true})
+		});
+		return found
+	}
+	
+	function hashID(s) {
+		let h = 2166136261;
+		for (let i = 0; i < s.length; i++) {
+			h ^= s.charCodeAt(i);
+			h = Math.imul(h, 16777619)
+		}
+		return (h >>> 0).toString(16)
+	}
+	
+	$('mdBtn').onclick = () => $('mdFile').click();
+	$('mdFile').onchange = async e => {
+		const files = [...e.target.files];
+		if (!files.length) return;
+		try {
+			let found = [];
+			for (const f of files) found.push(...parseMarkdown(await f.text(), f.name));
+			const output = [];
+			for (const c of found) {
+				const pool = [...found].filter(x => x.answer !== c.answer).sort((a, b) => (a.section === c.section ? 0 : 1) - (b.section === c.section ? 0 : 1) || Math.abs(a.answer.length - c.answer.length) - Math.abs(b.answer.length - c.answer.length));
+				const opts = [c.answer];
+				for (const x of pool) {
+					if (!opts.includes(x.answer)) opts.push(x.answer);
+					if (opts.length === 4) break
+				}
+				if (opts.length === 4) {
+					c.options = opts;
+					output.push(c)
+				}
+			}
+			if (!output.length) throw Error('未提取到至少四个不同的重点短语；请试着导入更多笔记');
+			installBank(output);
+			alert('提示：这是浏览器本地规则生成的挖空初稿，选项可能不够合理。建议先导出题库用 AI Skill 审查后再导入。')
+		} catch (err) {
+			alert('解析 Markdown 失败：' + err.message)
+		}
+		e.target.value = ''
+	};
+	$('aiBtn').onclick = async () => {
+		try {
+			const resp = await fetch('/api/models');
+			const data = await resp.json();
+			if (!resp.ok) throw Error(data.error || 'Ollama 未启动');
+			const names = data.models || [];
+			if (!names.length) throw Error('没有已下载模型，请在终端执行 ollama pull qwen2.5:7b');
+			const model = prompt('请选择本地 Ollama 模型（填写名称）：\n' + names.join('\n'), names[0]);
+			if (model && names.includes(model)) {
+				$('aiFile').dataset.model = model;
+				$('aiFile').click()
+			} else if (model) alert('请填写列表中的模型名')
+		} catch (e) {
+			alert('无法使用本地 AI：' + e.message + '\n请通过“启动网页.bat”打开，而不是双击 HTML。')
+		}
+	};
+	$('aiFile').onchange = async e => {
+		const fs = [...e.target.files];
+		if (!fs.length) return;
+		const model = e.target.dataset.model;
+		let all = [];
+		try {
+			for (let i = 0; i < fs.length; i++) {
+				const f = fs[i];
+				$('aiStatus').textContent = `本地模型分析中 ${i + 1}/${fs.length}：${f.name}（可能需要一些时间）`;
+				const resp = await fetch('/api/generate', {
+					method: 'POST',
+					headers: {'Content-Type': 'application/json'},
+					body: JSON.stringify({markdown: await f.text(), filename: f.name, model})
+				});
+				const data = await resp.json();
+				if (!resp.ok) throw Error(data.error || '请求失败');
+				all.push(...(data.cards || []))
+			}
+			if (!all.length) throw Error('AI 未生成通过原文校验的卡片，可改用较强模型或规则导入');
+			const combined = new Map(cards.map(c => [c.id, c]));
+			for (const c of all) combined.set(c.id, c);
+			installBank([...combined.values()]);
+			$('aiStatus').textContent = `完成：新增或更新 ${all.length} 张卡片，请检查 AI 干扰选项。`
+		} catch (err) {
+			$('aiStatus').textContent = '生成中断：' + err.message;
+			alert(err.message)
+		}
+		e.target.value = ''
+	};
+	refreshSections();
+	start();
+</script>
+</body>
+</html>
